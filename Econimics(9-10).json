@@ -1,0 +1,81 @@
+{
+    "subject": "Economics",
+    "gradeRange": "9-10",
+    "standards": [
+      {
+        "domain": "E1",
+        "title": "Understands that people have to make choices between wants and needs and evaluates the outcomes of those choices.",
+        "components": [
+          {
+            "code": "E1.9-10.1",
+            "grade": "9-10",
+            "description": "Analyze how the costs and benefits of economic choices have shaped events in the world in the past and present."
+          },
+          {
+            "code": "E1.9-10.2",
+            "grade": "9-10",
+            "description": "Analyze how choices made by individuals, firms, or governments are constrained by the resources to which they have access."
+          }
+        ]
+      },
+      {
+        "domain": "E2",
+        "title": "Understands how economic systems function.",
+        "components": [
+          {
+            "code": "E2.9-10.1",
+            "grade": "9-10",
+            "description": "Explain how a variety of economies have shaped the production, distribution, and consumption of goods, services, and resources around the world in the past or present."
+          },
+          {
+            "code": "E2.9-10.2",
+            "grade": "9-10",
+            "description": "Describe the effects of specialization, availability of resources, and technology on a variety of economies."
+          },
+          {
+            "code": "E2.9-10.3",
+            "grade": "9-10",
+            "description": "Analyze how and why countries have specialized in the production of particular goods and services in the past or present."
+          },
+          {
+            "code": "E2.9-10.4",
+            "grade": "9-10",
+            "description": "Analyze the relationship between the distribution of income and the allocation of resources in a variety of economies."
+          }
+        ]
+      },
+      {
+        "domain": "E3",
+        "title": "Understands the government’s role in the economy.",
+        "components": [
+          {
+            "code": "E3.9-10.1",
+            "grade": "9-10",
+            "description": "Analyze the costs and benefits of government trade policies from around the world in the past and present."
+          },
+          {
+            "code": "E3.9-10.2",
+            "grade": "9-10",
+            "description": "Explain the role of government in advancing technology and investing in capital goods and human capital to increase economic growth and standards of living."
+          }
+        ]
+      },
+      {
+        "domain": "E4",
+        "title": "Understands the economic issues and problems that all societies face.",
+        "components": [
+          {
+            "code": "E4.9-10.1",
+            "grade": "9-10",
+            "description": "Evaluate how people across the world have addressed issues involved with the distribution of resources and sustainability."
+          },
+          {
+            "code": "E4.9-10.2",
+            "grade": "9-10",
+            "description": "Analyze why specialization is used to help countries increase their overall economy, contribute to globalization, or solve economic challenges."
+          }
+        ]
+      }
+    ]
+  }
+  

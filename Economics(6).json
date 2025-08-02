@@ -1,0 +1,67 @@
+{
+    "subject": "Economics",
+    "gradeRange": "6",
+    "standards": [
+      {
+        "domain": "E1",
+        "title": "Understands that people have to make choices between wants and needs and evaluates the outcomes of those choices.",
+        "components": [
+          {
+            "code": "E1.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Analyze the costs and benefits of economic choices made by groups and individuals in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E2",
+        "title": "Understands how economic systems function.",
+        "components": [
+          {
+            "code": "E2.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Describe the production, distribution, and consumption of goods, services, and resources in societies from the past or in the present."
+          },
+          {
+            "code": "E2.6-8.2",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain how scarce resources have affected international trade in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E3",
+        "title": "Understands the government’s role in the economy.",
+        "components": [
+          {
+            "code": "E3.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain the role of government in the world’s economies through the creation of money, taxation, and spending in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E4",
+        "title": "Understands the economic issues and problems that all societies face.",
+        "components": [
+          {
+            "code": "E4.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain the distribution of wealth and sustainability of resources in the world."
+          },
+          {
+            "code": "E4.6-8.2",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain barriers to trade and how those barriers influence trade among nations."
+          }
+        ]
+      }
+    ]
+  }
+  

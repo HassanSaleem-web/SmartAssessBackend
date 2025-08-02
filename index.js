@@ -5,135 +5,343 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
 require('dotenv').config();
-
-const OpenAI = require("openai");
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const axios = require('axios');
 
 const app = express();
 const PORT = 5000;
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
-
-// Static serve the PDFs
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 
-// Ensure PDF output directory exists
 const pdfDir = path.join(__dirname, 'pdfs');
 if (!fs.existsSync(pdfDir)) fs.mkdirSync(pdfDir);
 
-// Load rubric JSON
 const rubricPath = path.join(__dirname, 'structured_cel_rubric.json');
 const rubricData = JSON.parse(fs.readFileSync(rubricPath, 'utf8'));
 
-// Debug helper
 const debugLog = (label, data) => {
   console.log(`\n=== ${label} ===`);
   console.dir(data, { depth: null });
 };
 
-// Extract rubric detail
-function getCriterionDetail(criterionTitle) {
-  const criterion = rubricData[criterionTitle];
-  if (!criterion) return null;
-
-  return Object.values(criterion).map(item => ({
-    component: item.component,
-    distinguished: item.distinguished
-  }));
+function getAllDistinguishedComponents() {
+  const components = [];
+  Object.entries(rubricData).forEach(([criterion, details]) => {
+    Object.entries(details).forEach(([code, { component, distinguished }]) => {
+      components.push({ code, component, distinguished, criterion });
+    });
+  });
+  return components;
 }
 
-// Generate a PDF from text
+function loadStandardsFile(subject, gradeLevel) {
+  const parsed = parseInt(gradeLevel);
+  if (isNaN(parsed)) return null;
+
+  let gradeBand = '';
+  if ([9, 10].includes(parsed)) gradeBand = '9-10';
+  else if ([11, 12].includes(parsed)) gradeBand = '11-12';
+  else if ([1, 2, 3, 4, 5, 6, 7, 8].includes(parsed)) gradeBand = parsed.toString();
+  else return null;
+
+  const fileName = `${subject}(${gradeBand}).json`;
+  const filePath = path.join(__dirname, fileName);
+  console.log(`📂 Attempting to load standards file: ${fileName}`);
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  }
+
+  return null;
+}
+
 function generatePDF(content, filename) {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument();
+    const doc = new PDFDocument({ margin: 50 });
     const filePath = path.join(pdfDir, filename);
     const stream = fs.createWriteStream(filePath);
-
     doc.pipe(stream);
 
-    content.split('\n').forEach(line => {
-      if (line.trim().endsWith(':')) {
-        doc.font('Helvetica-Bold').fontSize(12).text(line, { lineGap: 6 });
-      } else {
-        doc.font('Helvetica').fontSize(11).text(line, { lineGap: 3 });
+    const lines = content.split('\n');
+    let insideTable = false;
+    let tableData = [];
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) return doc.moveDown(0.5);
+      if (trimmed === '---') return doc.moveDown(0.7);
+
+      const headerMatch = trimmed.match(/^\*\*(.+?)\*\*$/);
+      if (headerMatch) {
+        if (insideTable && tableData.length) {
+          renderTable(doc, tableData);
+          insideTable = false;
+          tableData = [];
+        }
+        doc.moveDown(0.5).font('Helvetica-Bold').fontSize(13).text(headerMatch[1]);
+        return;
       }
+
+      if (trimmed.startsWith('Table of Analysis')) {
+        doc.addPage();
+        doc.moveDown(1).font('Helvetica-Bold').fontSize(12).text('Table of Analysis');
+        insideTable = true;
+        return;
+      }
+
+      if (insideTable) {
+        if (trimmed.startsWith('|')) {
+          const cells = trimmed.split('|').slice(1, -1).map(cell => cell.trim());
+          tableData.push(cells);
+        } else {
+          renderTable(doc, tableData);
+          insideTable = false;
+          tableData = [];
+          doc.moveDown(0.5).font('Helvetica').fontSize(10.5).text(trimmed);
+        }
+        return;
+      }
+
+      const rubricLabelMatch = trimmed.match(/^(Ø=)?(Y9\s*)?(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]\s*(.+)/);
+      if (rubricLabelMatch) {
+        const code = rubricLabelMatch[3];
+        const label = rubricLabelMatch[4];
+        doc.moveDown(0.5).font('Helvetica-Bold').fontSize(11.5).text(`${code} - ${label}`);
+        return;
+      }
+
+      const subMatch = trimmed.match(/^[-–]?\s*(Explanation|Evidence|Suggestions):\s*(.*)/i);
+      if (subMatch) {
+        doc.font('Helvetica-Bold').fontSize(10.5).text(`${subMatch[1]}: `, { continued: true });
+        doc.font('Helvetica').fontSize(10.5).text(subMatch[2]);
+        return;
+      }
+
+      doc.font('Helvetica').fontSize(10.5).text(trimmed);
     });
 
-    doc.end();
+    if (insideTable && tableData.length) {
+      renderTable(doc, tableData);
+    }
 
+    doc.end();
     stream.on('finish', () => resolve(`/pdfs/${filename}`));
     stream.on('error', reject);
   });
 }
 
-// POST /grade
-app.post('/grade', async (req, res) => {
-  const { gradeLevel, intensity, rubric, submission } = req.body;
+function renderTable(doc, tableData) {
+  const startX = doc.page.margins.left;
+  let y = doc.y;
+  const padding = 5;
+  const rowHeight = 25;
+  const colWidths = [170, 90, 250];
 
+  tableData.forEach((row, i) => {
+    let x = startX;
+    row.forEach((cell, j) => {
+      if (i === 0) {
+        doc.rect(x, y, colWidths[j], rowHeight).fillAndStroke('#f2f2f2', 'black');
+      } else {
+        doc.rect(x, y, colWidths[j], rowHeight).stroke();
+      }
+
+      doc
+        .fillColor('black')
+        .font('Helvetica')
+        .fontSize(9)
+        .text(cell, x + padding, y + 7, {
+          width: colWidths[j] - 2 * padding,
+          height: rowHeight,
+          ellipsis: true
+        });
+
+      x += colWidths[j];
+    });
+
+    y += rowHeight;
+
+    if (y + rowHeight > doc.page.height - doc.page.margins.bottom) {
+      doc.addPage();
+      y = doc.page.margins.top;
+    }
+  });
+
+  doc.moveDown(2);
+}
+
+function normalizeSubjectName(subjectRaw) {
+  const lower = subjectRaw.trim().toLowerCase();
+
+  if (lower.includes("english") || lower.includes("language arts") || lower === "ela") return "ELA";
+  if (lower.includes("social studies skills") || lower.includes("ss")) return "SS";
+  if (lower === "history") return "History";
+  if (lower === "geography") return "Geography";
+  if (lower === "civics") return "Civics";
+  if (lower === "economics") return "Economics";
+
+  return subjectRaw.trim();
+}
+
+async function identifySubject(submission) {
+  const prompt = `
+You are an AI assistant. Based on the student submission, determine the academic subject.
+
+Choose ONLY ONE from the following exact options (case-sensitive):
+- History
+- Geography
+- Civics
+- Economics
+- SS
+- ELA
+
+"SS" stands for "Social Studies Skills". Do not say anything but SS in this case!
+"ELA" stands for "English Language Arts". Do not say anything but ELA in this case!
+
+Submission:
+"${submission}"
+
+Respond with only the exact subject name from the list above. Do NOT explain. Do NOT add extra words.
+`.trim();
+
+  const payload = {
+    model: "mistralai/mistral-7b-instruct:free",
+    messages: [
+      { role: "system", content: "You are a subject classification assistant." },
+      { role: "user", content: prompt }
+    ]
+  };
+
+  const headers = {
+    Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+    "Content-Type": "application/json"
+  };
+
+  const res = await axios.post("https://openrouter.ai/api/v1/chat/completions", payload, { headers });
+  const rawSubject = res.data.choices[0].message.content.trim();
+  return normalizeSubjectName(rawSubject);
+}
+
+app.post('/grade', async (req, res) => {
+  const { gradeLevel, intensity, submission } = req.body;
   debugLog('🟢 Incoming Payload', req.body);
 
   if (!submission || !submission.trim()) {
     return res.status(400).json({ error: 'Assignment text is required.' });
   }
 
-  const rubricDetails = getCriterionDetail(rubric);
-  if (!rubricDetails) {
-    return res.status(400).json({ error: 'Invalid rubric criterion selected.' });
-  }
+  try {
+    const subject = await identifySubject(submission);
+    debugLog('📚 Identified Subject', subject);
 
-  const prompt = `
-You are an expert educator and grader specializing in detailed feedback on the assignments done by students and submitted to you by teachers.
+    const standardsData = loadStandardsFile(subject, gradeLevel);
+    const rubricDetails = getAllDistinguishedComponents();
+
+    let standardsText = '📭 No grade-level standards available. Using rubric only.';
+
+    if (standardsData && Array.isArray(standardsData.standards)) {
+      console.log(`🧩 Formatting standards for subject: ${subject}`);
+
+      if (subject === 'ELA') {
+        standardsText = standardsData.standards.map(domain => {
+          return `📘 ${domain.domain}\n${domain.standards.map(item => `- ${item}`).join('\n')}`;
+        }).join('\n\n');
+      } else {
+        standardsText = standardsData.standards.map(domain => {
+          return `📌 ${domain.domain} - ${domain.title}\n${domain.components.map(c =>
+            `- ${c.code} [${c.grade}, ${c.region}]: ${c.description}`
+          ).join('\n')}`;
+        }).join('\n\n');
+      }
+    }
+
+    const prompt = `
+You are an expert educator and grading assistant.
 
 Grade Level: ${gradeLevel}
 Grading Intensity: ${intensity}
-Rubric Criterion: ${rubric}
+Identified Subject: ${subject}
 
-Rubric Components:
-${rubricDetails.map(item => `• ${item.component}: ${item.distinguished}`).join('\n')}
+Use the following Rubric Components and Grade-Level Standards to evaluate the student submission.
 
-Student Submission:
-${submission}
+🎯 Rubric Components:
+${rubricDetails.map(r => `• ${r.code} (${r.criterion}) - ${r.component}: ${r.distinguished}`).join('\n')}
 
-Please analyze the student submission in depth. Your response must include:
-1. A score (out of 4) with justification.
-2. A breakdown of how the submission aligns or misaligns with each rubric component.
-3. Clear references to specific sentences, ideas, or patterns in the submission. Also references to codes(mention the code itself when referring to it) in the criterion. 
-4. Detailed feedback that explains:
-   - What the student did well and how it meets rubric expectations.
-   - Where the student fell short and how it could be improved.
-   - How the performance reflects the selected grade level and intensity.
-5. Use professional and instructional language. Structure your response as a comprehensive grading report.
+📚 Grade-Level Standards:
+${standardsText}
 
-This feedback is intended to guide both the student and the teacher, so clarity and completeness are essential.
+✍️ Student Submission:
+"${submission}"
+
+📝 Provide your evaluation in this format:
+
+---
+
+**Grading Report**
+
+**Overall Score (out of 4)**:  
+**Rubric Coverage**: All components reviewed at distinguished level.
+
+---
+
+**Component Analysis**
+
+${rubricDetails.map(r => `🔹 ${r.code} - ${r.component}  
+- Explanation:  
+- Evidence:  
+- Suggestions:`).join('\n\n')}
+- A table that shows references from the assignment and your judgement
+
+---
+
+**Feedback to Student**  
+Provide personalized, constructive feedback using rubric codes and standards.  
+Call out **specific lines or phrases** from the student's submission that are strong or need improvement.  
+Give detailed suggestions for how to improve weak areas (e.g., word choice, organization, clarity, evidence).  
+Use a warm and encouraging tone, like a real teacher guiding a student toward growth.
+
+---
+
+**Feedback to Teacher**  
+Describe instructional insights. Mention rubric and standard references.
+
+---
+
+🧾 Constraints:
+- Use rubric + standards if both are available.
+- Always use rubric.
+- You must provide a table of your analysis with references from students work and your judgement 
+- Follow the exact structure.
+- Use professional language.
 `.trim();
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        { role: 'system', content: 'You are an educational grading assistant.' },
-        { role: 'user', content: prompt }
-      ]
-    });
+    const headers = {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json"
+    };
 
-    const result = completion.choices[0].message.content;
-    debugLog('🧠 GPT-4 Response', result);
+    const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
+      model: "mistralai/mistral-7b-instruct:free",
+      messages: [
+        { role: "system", content: "You are an educational grading assistant." },
+        { role: "user", content: prompt }
+      ]
+    }, { headers });
+
+    let result = response.data.choices[0].message.content;
+    debugLog('🧠 Mistral Response', result);
+    result = result.replace(/[^\x00-\x7F]+/g, '');
 
     const pdfFilename = `grading-${Date.now()}.pdf`;
     const pdfUrl = await generatePDF(result, pdfFilename);
 
     res.json({ success: true, result, pdfUrl });
   } catch (err) {
-    console.error('🔥 GPT API Error:', err);
-    res.status(500).json({ error: 'Error processing grading with GPT-4.' });
+    console.error('🔥 Error during grading:', err);
+    res.status(500).json({ error: 'Error processing grading with Mistral.' });
   }
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
 });

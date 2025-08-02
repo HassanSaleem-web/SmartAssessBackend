@@ -1,0 +1,63 @@
+{
+  "subject": "English Language Arts",
+  "grade": "3",
+  "standards": [
+    {
+      "domain": "Reading: Literature",
+      "standards": [
+        "Ask and answer questions to demonstrate understanding, referring explicitly to the text.",
+        "Recount stories and determine their central message, lesson, or moral.",
+        "Describe characters and explain how their actions contribute to the events.",
+        "Determine the meaning of words and phrases, distinguishing literal and nonliteral language.",
+        "Refer to parts of stories, dramas, and poems when writing or speaking about a text.",
+        "Distinguish their own point of view from that of the narrator or characters."
+      ]
+    },
+    {
+      "domain": "Reading: Informational Text",
+      "standards": [
+        "Determine the main idea and recount key details that support it.",
+        "Describe the relationship between a series of events, ideas, or steps using language that pertains to time, sequence, and cause/effect.",
+        "Use text features to locate information quickly and efficiently.",
+        "Compare and contrast the most important points and key details in two texts on the same topic."
+      ]
+    },
+    {
+      "domain": "Reading: Foundational Skills",
+      "standards": [
+        "Read grade-level text with purpose and understanding.",
+        "Read grade-level prose and poetry orally with accuracy, appropriate rate, and expression.",
+        "Use context to confirm or self-correct word recognition and understanding."
+      ]
+    },
+    {
+      "domain": "Writing",
+      "standards": [
+        "Write opinion pieces on topics or texts, supporting a point of view with reasons.",
+        "Write informative/explanatory texts to examine a topic and convey ideas clearly.",
+        "Write narratives to develop real or imagined experiences with descriptive details and clear event sequences."
+      ]
+    },
+    {
+      "domain": "Speaking and Listening",
+      "standards": [
+        "Engage effectively in collaborative discussions with diverse partners.",
+        "Determine the main ideas and supporting details of information presented orally.",
+        "Ask and answer questions about information from a speaker, offering appropriate elaboration.",
+        "Report on a topic or text, tell a story, or recount an experience clearly and coherently.",
+        "Create engaging audio recordings and visual displays to enhance development of main ideas."
+      ]
+    },
+    {
+      "domain": "Language",
+      "standards": [
+        "Explain the function of nouns, pronouns, verbs, adjectives, and adverbs.",
+        "Form and use regular and irregular plural nouns and verbs.",
+        "Use abstract nouns and simple verb tenses correctly.",
+        "Ensure subject-verb and pronoun-antecedent agreement.",
+        "Use coordinating and subordinating conjunctions to write compound and complex sentences.",
+        "Determine or clarify the meaning of unknown words and phrases using context clues, affixes, or dictionaries."
+      ]
+    }
+  ]
+}

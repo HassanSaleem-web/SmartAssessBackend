@@ -1,0 +1,62 @@
+{
+  "subject": "English Language Arts",
+  "grade": "4",
+  "standards": [
+    {
+      "domain": "Reading: Literature",
+      "standards": [
+        "Refer to details and examples in a text when explaining and drawing inferences.",
+        "Determine a theme of a story, drama, or poem using details; summarize the text.",
+        "Describe a character, setting, or event in depth using specific details.",
+        "Explain major differences between poems, drama, and prose.",
+        "Compare and contrast the point of view from which different stories are narrated."
+      ]
+    },
+    {
+      "domain": "Reading: Informational Text",
+      "standards": [
+        "Determine the main idea and explain how it is supported by key details.",
+        "Explain events, procedures, ideas, or concepts in a text based on information in the text.",
+        "Interpret information presented visually, orally, or quantitatively and explain how it contributes to understanding.",
+        "Describe the overall structure of events, ideas, or concepts in a text.",
+        "Compare and contrast firsthand and secondhand accounts of the same event or topic."
+      ]
+    },
+    {
+      "domain": "Reading: Foundational Skills",
+      "standards": [
+        "Read grade-level prose and poetry orally with accuracy, appropriate rate, and expression.",
+        "Use context to confirm or self-correct word recognition and understanding."
+      ]
+    },
+    {
+      "domain": "Writing",
+      "standards": [
+        "Write opinion pieces supporting a point of view with reasons and information.",
+        "Write informative/explanatory texts to examine a topic and convey ideas clearly.",
+        "Write narratives to develop real or imagined experiences with descriptive details, clear event sequences, and character responses."
+      ]
+    },
+    {
+      "domain": "Speaking and Listening",
+      "standards": [
+        "Engage effectively in collaborative discussions, building on others’ ideas and expressing own ideas clearly.",
+        "Paraphrase portions of a text read aloud or presented information.",
+        "Identify reasons and evidence a speaker provides to support points.",
+        "Report on a topic or text, tell a story, or recount an experience with appropriate facts and relevant details.",
+        "Add audio recordings and visual displays to enhance presentations."
+      ]
+    },
+    {
+      "domain": "Language",
+      "standards": [
+        "Use relative pronouns and adverbs.",
+        "Form and use progressive verb tenses.",
+        "Use modal auxiliaries to convey various conditions.",
+        "Use correct capitalization, punctuation, and spelling.",
+        "Use context clues and Greek/Latin affixes and roots to determine meanings of words.",
+        "Consult reference materials to clarify word meanings and pronunciations."
+      ]
+    }
+  ]
+}

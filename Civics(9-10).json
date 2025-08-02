@@ -1,0 +1,64 @@
+{
+  "subject": "Civics",
+  "gradeRange": "9-10",
+  "standards": [
+    {
+      "domain": "C2",
+      "title": "Understands the purposes, organization, and function of governments, laws, and political systems.",
+      "components": [
+        {
+          "code": "C2.9-10.1",
+          "grade": "9th-10th",
+          "description": "Explain how citizens and institutions address social and political problems at the local, state, tribal, national, and international level."
+        },
+        {
+          "code": "C2.9-10.2",
+          "grade": "9th-10th",
+          "description": "Explain the origins, functions, and structure of government."
+        }
+      ]
+    },
+    {
+      "domain": "C3",
+      "title": "Understands the purposes and organization of tribal and international relationships and U.S. foreign policy.",
+      "components": [
+        {
+          "code": "C3.9-10.1",
+          "grade": "9th-10th",
+          "description": "Analyze the impact of constitutions, laws, treaties, and international agreements on the maintenance of national and international order."
+        },
+        {
+          "code": "C3.9-10.2",
+          "grade": "9th-10th",
+          "description": "Analyze relationships among governments, civil societies, and economic markets."
+        }
+      ]
+    },
+    {
+      "domain": "C4",
+      "title": "Understands civic involvement.",
+      "components": [
+        {
+          "code": "C4.9-10.1",
+          "grade": "9th-10th",
+          "description": "Use appropriate deliberative processes in multiple settings."
+        },
+        {
+          "code": "C4.9-10.2",
+          "grade": "9th-10th",
+          "description": "Analyze how governments throughout history have or have not valued individual rights over the common good."
+        },
+        {
+          "code": "C4.9-10.3",
+          "grade": "9th-10th",
+          "description": "Describe the impact and the appropriate roles of personal interests and perspectives on the application of civic virtues, democratic principles, constitutional rights, and human rights."
+        },
+        {
+          "code": "C4.9-10.4",
+          "grade": "9th-10th",
+          "description": "Explain how social and political problems are addressed at the local, regional, state, tribal, national, and international level."
+        }
+      ]
+    }
+  ]
+}

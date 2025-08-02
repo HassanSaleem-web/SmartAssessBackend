@@ -1,0 +1,73 @@
+{
+    "subject": "History",
+    "gradeRange": "8",
+    "standards": [
+      {
+        "domain": "H1",
+        "title": "Understands historical chronology.",
+        "components": [
+          {
+            "code": "H1.6-8.6",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain how themes and developments help to define eras in United States history from 1763 to 1877."
+          }
+        ]
+      },
+      {
+        "domain": "H2",
+        "title": "Understands and analyzes causal factors that have shaped major events in history.",
+        "components": [
+          {
+            "code": "H2.6-8.5",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain and analyze how individuals and movements have shaped United States history (1763-1877)."
+          },
+          {
+            "code": "H2.6-8.6",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain and analyze how cultures and cultural and ethnic groups have contributed to United States history (1763-1877)."
+          },
+          {
+            "code": "H2.6-8.7",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain and analyze how technology and ideas have impacted United States history (1763-1877)."
+          }
+        ]
+      },
+      {
+        "domain": "H3",
+        "title": "Understands that there are multiple perspectives and interpretations of historical events.",
+        "components": [
+          {
+            "code": "H3.6-8.4",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze and interpret historical materials from a variety of perspectives in United States history (1763-1877)."
+          },
+          {
+            "code": "H3.6-8.5",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze multiple causal factors to create positions on major events in United States history (1763-1877)."
+          }
+        ]
+      },
+      {
+        "domain": "H4",
+        "title": "Understands how historical events inform analysis of contemporary issues and events.",
+        "components": [
+          {
+            "code": "H4.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze how a historical event in United States history helps us to understand contemporary issues and events."
+          }
+        ]
+      }
+    ]
+  }
+  

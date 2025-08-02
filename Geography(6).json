@@ -1,0 +1,43 @@
+{
+    "subject": "Geography",
+    "gradeRange": "6",
+    "standards": [
+      {
+        "domain": "G1",
+        "title": "Understands the physical characteristics, cultural characteristics, and location of places, regions, and spatial patterns on the Earth’s surface.",
+        "components": [
+          {
+            "code": "G1.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Use maps, satellite images, photographs, and other representations to explain relationships between the locations of places, regions, and spatial patterns."
+          }
+        ]
+      },
+      {
+        "domain": "G2",
+        "title": "Understands human interaction with the environment.",
+        "components": [
+          {
+            "code": "G2.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain how human settlements and movements relate to the location and use of resources in the world."
+          }
+        ]
+      },
+      {
+        "domain": "G3",
+        "title": "Understands the geographic context of global issues and events.",
+        "components": [
+          {
+            "code": "G3.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain the roles of physical and cultural geography in shaping human behavior and world events."
+          }
+        ]
+      }
+    ]
+  }
+  

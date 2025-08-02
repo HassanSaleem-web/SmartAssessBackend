@@ -1,0 +1,86 @@
+{
+    "subject": "History",
+    "gradeRange": "9-10",
+    "standards": [
+      {
+        "domain": "H1",
+        "title": "Understands historical chronology.",
+        "components": [
+          {
+            "code": "H1.9-10.1",
+            "grade": "9th-10th",
+            "description": "Analyze change and continuity within a historical time period."
+          },
+          {
+            "code": "H1.9-10.2",
+            "grade": "9th-10th",
+            "description": "Assess how historical events and developments were shaped by unique circumstances of time and place as well as broader historical contexts."
+          },
+          {
+            "code": "H1.9-10.3",
+            "grade": "9th-10th",
+            "description": "Design questions generated about individuals and groups that assess how the significance of their actions changes over time."
+          }
+        ]
+      },
+      {
+        "domain": "H2",
+        "title": "Understands and analyzes causal factors that have shaped major events in history.",
+        "components": [
+          {
+            "code": "H2.9-10.1",
+            "grade": "9th-10th",
+            "description": "Analyze how individuals and movements have shaped world history (1450-present)."
+          },
+          {
+            "code": "H2.9-10.2",
+            "grade": "9th-10th",
+            "description": "Summarize how cultures and cultural and ethnic groups have shaped world history (1450-present)."
+          },
+          {
+            "code": "H2.9-10.3",
+            "grade": "9th-10th",
+            "description": "Define and evaluate how technology and ideas have shaped world history (1450-present)."
+          },
+          {
+            "code": "H2.9-10.4",
+            "grade": "9th-10th",
+            "description": "Analyze multiple and complex causes and effects of events in world history (1450-present)."
+          }
+        ]
+      },
+      {
+        "domain": "H3",
+        "title": "Understands that there are multiple perspectives and interpretations of historical events.",
+        "components": [
+          {
+            "code": "H3.9-10.1",
+            "grade": "9th-10th",
+            "description": "Analyze and interpret historical materials from a variety of perspectives in world history (1450-present)."
+          },
+          {
+            "code": "H3.9-10.2",
+            "grade": "9th-10th",
+            "description": "Analyze the multiple causal factors of conflicts in world history (1450-present) to create and support claims and counterclaims."
+          },
+          {
+            "code": "H3.9-10.3",
+            "grade": "9th-10th",
+            "description": "Explain how the perspectives of people in the present shape interpretations of the past."
+          }
+        ]
+      },
+      {
+        "domain": "H4",
+        "title": "Understands how historical events inform analysis of contemporary issues and events.",
+        "components": [
+          {
+            "code": "H4.9-10.1",
+            "grade": "9th-10th",
+            "description": "Examine and assess how an understanding of world history can explain that earlier events may cause later ones."
+          }
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,115 @@
+{
+  "subject": "History",
+  "gradeRange": "11-12",
+  "standards": [
+    {
+      "domain": "H1",
+      "title": "Understands historical chronology.",
+      "components": [
+        {
+          "code": "H1.11-12.1",
+          "grade": "11th-12th",
+          "description": "Evaluate how historical events and developments were shaped by unique circumstances of time and place as well as broader historical contexts."
+        },
+        {
+          "code": "H1.11-12.2",
+          "grade": "11th-12th",
+          "description": "Design questions generated about individuals and groups that assess how the significance of their actions changes over time and is shaped by the historical context."
+        }
+      ]
+    },
+    {
+      "domain": "H2",
+      "title": "Understands and analyzes causal factors that have shaped major events in history.",
+      "components": [
+        {
+          "code": "H2.11-12.1",
+          "grade": "11th-12th",
+          "description": "Analyze how technology and ideas have shaped United States history (1877-present)."
+        },
+        {
+          "code": "H2.11-12.2",
+          "grade": "11th-12th",
+          "description": "Distinguish between long-term causes and triggering events in developing a historical argument."
+        },
+        {
+          "code": "H2.11-12.3",
+          "grade": "11th-12th",
+          "description": "Evaluate how individuals and movements have shaped contemporary world issues."
+        },
+        {
+          "code": "H2.11-12.4",
+          "grade": "11th-12th",
+          "description": "Analyze how cultural identity can promote unity and division."
+        },
+        {
+          "code": "H2.11-12.5",
+          "grade": "11th-12th",
+          "description": "Evaluate the ethics of current and future uses of technology based on how technology has shaped history."
+        }
+      ]
+    },
+    {
+      "domain": "H3",
+      "title": "Understands that there are multiple perspectives and interpretations of historical events.",
+      "components": [
+        {
+          "code": "H3.11-12.1",
+          "grade": "11th-12th",
+          "description": "Analyze how historical contexts shaped and continue to shape people’s perspectives."
+        },
+        {
+          "code": "H3.11-12.2",
+          "grade": "11th-12th",
+          "description": "Analyze the ways in which the perspectives of those writing history shaped the history that they produced."
+        },
+        {
+          "code": "H3.11-12.3",
+          "grade": "11th-12th",
+          "description": "Analyze the relationship between historical sources and the secondary interpretations made from them."
+        },
+        {
+          "code": "H3.11-12.4",
+          "grade": "11th-12th",
+          "description": "Integrate evidence from multiple relevant historical sources and interpretations into a reasoned argument about the past to create claims and counterclaims."
+        },
+        {
+          "code": "H3.11-12.5",
+          "grade": "11th-12th",
+          "description": "Evaluate how historical contexts shaped and continue to shape people’s perspectives."
+        },
+        {
+          "code": "H3.11-12.6",
+          "grade": "11th-12th",
+          "description": "Evaluate the ways in which the perspectives of those writing history shaped the history that they produced."
+        },
+        {
+          "code": "H3.11-12.7",
+          "grade": "11th-12th",
+          "description": "Analyze how current interpretations of the past are limited by the extent to which available historical sources represent perspectives of people at the time."
+        }
+      ]
+    },
+    {
+      "domain": "H4",
+      "title": "Understands how historical events inform analysis of contemporary issues and events.",
+      "components": [
+        {
+          "code": "H4.11-12.1",
+          "grade": "11th-12th",
+          "description": "Examine and evaluate in detail a series of events in United States’ history and explain how earlier events may also cause later ones."
+        },
+        {
+          "code": "H4.11-12.2",
+          "grade": "11th-12th",
+          "description": "Evaluate claims about a current issue based on an analysis of history."
+        },
+        {
+          "code": "H4.11-12.3",
+          "grade": "11th-12th",
+          "description": "Analyze how current events today are rooted in past events."
+        }
+      ]
+    }
+  ]
+}

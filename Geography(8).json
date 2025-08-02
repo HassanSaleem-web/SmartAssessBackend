@@ -1,0 +1,43 @@
+{
+    "subject": "Geography",
+    "gradeRange": "8",
+    "standards": [
+      {
+        "domain": "G1",
+        "title": "Understands the physical characteristics, cultural characteristics, and location of places, regions, and spatial patterns on the Earth’s surface.",
+        "components": [
+          {
+            "code": "G1.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze the cultural and environmental characteristics that make regions in the United States similar to and different from one another."
+          }
+        ]
+      },
+      {
+        "domain": "G2",
+        "title": "Understands human interaction with the environment.",
+        "components": [
+          {
+            "code": "G2.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain how environmental and cultural characteristics influence population distribution and movement in the United States."
+          }
+        ]
+      },
+      {
+        "domain": "G3",
+        "title": "Understands the geographic context of global issues and events.",
+        "components": [
+          {
+            "code": "G3.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze how geographic factors have influenced decisions and policies in U.S. history and government."
+          }
+        ]
+      }
+    ]
+  }
+  

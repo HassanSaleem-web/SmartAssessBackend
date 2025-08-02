@@ -1,0 +1,36 @@
+{
+    "subject": "Geography",
+    "gradeRange": "9-10",
+    "standards": [
+      {
+        "domain": "G1",
+        "title": "Understands the physical characteristics, cultural significance, and location of places, regions, and spatial patterns on the Earth’s surface.",
+        "components": [
+          { "code": "G1.9-10.1", "region": "World", "grade": "9th-10th", "description": "Define the characteristics of each of the major world regions." },
+          { "code": "G1.9-10.2", "region": "World", "grade": "9th-10th", "description": "Explain the causes and effects of voluntary and involuntary migration in the world." },
+          { "code": "G1.9-10.3", "region": "World", "grade": "9th-10th", "description": "Create maps that employ geospatial and related technologies to display and explain the spatial patterns of culture and environment." },
+          { "code": "G1.9-10.4", "region": "World", "grade": "9th-10th", "description": "Explain relationships between the locations of places and regions, and their political, cultural, and economic dynamics, using maps, satellite images, photographs, and other representations." }
+        ]
+      },
+      {
+        "domain": "G2",
+        "title": "Understands human interaction with the environment.",
+        "components": [
+          { "code": "G2.9-10.1", "region": "World", "grade": "9th-10th", "description": "Analyze human interaction with the environment across the world in the past or present." },
+          { "code": "G2.9-10.2", "region": "World", "grade": "9th-10th", "description": "Explain how humans modify the environment with technology." },
+          { "code": "G2.9-10.3", "region": "World", "grade": "9th-10th", "description": "Explain that the environment is modified through agriculture, industry, settlement, lifestyles, and other forms of activity." },
+          { "code": "G2.9-10.4", "region": "World", "grade": "9th-10th", "description": "Explain that humans cope with and adapt to environmental conditions." }
+        ]
+      },
+      {
+        "domain": "G3",
+        "title": "Understands the geographic context of global issues and events.",
+        "components": [
+          { "code": "G3.9-10.1", "region": "World", "grade": "9th-10th", "description": "Define how the geography of expansion and encounter have shaped global politics and economics in history." },
+          { "code": "G3.9-10.2", "region": "World", "grade": "9th-10th", "description": "Analyze the reciprocal nature of how historical events and the spatial diffusion of ideas, technologies, and cultural practices have influenced migration patterns and the distribution of human population." },
+          { "code": "G3.9-10.3", "region": "World", "grade": "9th-10th", "description": "Evaluate the consequences of human-made and natural catastrophes on global trade, politics, and human migration." }
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,141 @@
+{
+    "subject": "Economics",
+    "gradeRange": "11-12",
+    "standards": [
+      {
+        "domain": "E1",
+        "title": "Understands that people have to make choices between wants and needs and evaluates the outcomes of those choices.",
+        "components": [
+          {
+            "code": "E1.11-12.1",
+            "grade": "11-12",
+            "description": "Analyze how economic incentives influence choices that may result in policies with a range of costs and benefits for different groups in the United States."
+          },
+          {
+            "code": "E1.11-12.2",
+            "grade": "11-12",
+            "description": "Assess the optimal level of a public service with the marginal costs and benefits of providing a service in the United States."
+          },
+          {
+            "code": "E1.11-12.3",
+            "grade": "11-12",
+            "description": "Analyze how economic choices made by groups and individuals in the global economy can impose costs and provide benefits."
+          },
+          {
+            "code": "E1.11-12.4",
+            "grade": "11-12",
+            "description": "Use marginal benefits and marginal costs to construct an argument for or against an approach or solution to an economic issue."
+          }
+        ]
+      },
+      {
+        "domain": "E2",
+        "title": "Understands how economic systems function.",
+        "components": [
+          {
+            "code": "E2.11-12.1",
+            "grade": "11-12",
+            "description": "Analyze how comparative advantage has affected the United States’ imports and exports in the past or present."
+          },
+          {
+            "code": "E2.11-12.2",
+            "grade": "11-12",
+            "description": "Describe how imports are paid for by exports, savings, or borrowing in the United States."
+          },
+          {
+            "code": "E2.11-12.3",
+            "grade": "11-12",
+            "description": "Describe how market outcomes, surpluses, and shortages are determined by buyers’ incomes and preferences, sellers’ production and price, and government policies in the United States."
+          },
+          {
+            "code": "E2.11-12.4",
+            "grade": "11-12",
+            "description": "Evaluate the advantages, disadvantages, and stability of different economic systems for countries and groups of people, both short and long term."
+          },
+          {
+            "code": "E2.11-12.5",
+            "grade": "11-12",
+            "description": "Evaluate the effects of specialization, availability of resources, and technology on a variety of economies."
+          },
+          {
+            "code": "E2.11-12.6",
+            "grade": "11-12",
+            "description": "Evaluate the level of competition based on the introduction of new products, production methods, entry into the market, and the consumers’ knowledge of goods or services in a variety of economies."
+          },
+          {
+            "code": "E2.11-12.7",
+            "grade": "11-12",
+            "description": "Evaluate the relationship between the distribution of income and the allocation of resources in a variety of economies."
+          }
+        ]
+      },
+      {
+        "domain": "E3",
+        "title": "Understands the government’s role in the economy.",
+        "components": [
+          {
+            "code": "E3.11-12.1",
+            "grade": "11-12",
+            "description": "Evaluate the role of the United States government in regulating a market economy in the past or present."
+          },
+          {
+            "code": "E3.11-12.2",
+            "grade": "11-12",
+            "description": "Use data to explain the government’s influence on spending, production, and the money supply when economic conditions change."
+          },
+          {
+            "code": "E3.11-12.3",
+            "grade": "11-12",
+            "description": "Describe how the United States government has established rules in which markets operate."
+          },
+          {
+            "code": "E3.11-12.4",
+            "grade": "11-12",
+            "description": "Evaluate the selection of governmental fiscal and monetary policies by weighing the costs and benefits in a variety of economic conditions."
+          },
+          {
+            "code": "E3.11-12.5",
+            "grade": "11-12",
+            "description": "Analyze the role of government in defining and enforcing property rights of a good or service."
+          }
+        ]
+      },
+      {
+        "domain": "E4",
+        "title": "Understands the economic issues and problems that all societies face.",
+        "components": [
+          {
+            "code": "E4.11-12.1",
+            "grade": "11-12",
+            "description": "Evaluate how people in the United States have addressed issues involved with the distribution of resources and sustainability."
+          },
+          {
+            "code": "E4.11-12.2",
+            "grade": "11-12",
+            "description": "Evaluate how the standard of living changes when incentives, entitlement programs, or entrepreneurship is increased."
+          },
+          {
+            "code": "E4.11-12.3",
+            "grade": "11-12",
+            "description": "Evaluate how individuals and different groups affect and are affected by the distribution of resources and sustainability."
+          },
+          {
+            "code": "E4.11-12.4",
+            "grade": "11-12",
+            "description": "Analyze the role of comparative advantage in international trade of goods and services."
+          },
+          {
+            "code": "E4.11-12.5",
+            "grade": "11-12",
+            "description": "Explain how current globalization trends and policies affect economic growth, labor markets, rights of citizens, the environment, and resource and income distribution in different nations."
+          },
+          {
+            "code": "E4.11-12.6",
+            "grade": "11-12",
+            "description": "Use economic indicators to analyze the current and future state of an economy."
+          }
+        ]
+      }
+    ]
+  }
+  

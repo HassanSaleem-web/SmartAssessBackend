@@ -1,0 +1,43 @@
+{
+    "subject": "Geography",
+    "gradeRange": "7",
+    "standards": [
+      {
+        "domain": "G1",
+        "title": "Understands the physical characteristics, cultural characteristics, and location of places, regions, and spatial patterns on the Earth’s surface.",
+        "components": [
+          {
+            "code": "G1.6-8.2",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain how the physical and human characteristics of places and regions are connected to human identities and cultures in Washington."
+          }
+        ]
+      },
+      {
+        "domain": "G2",
+        "title": "Understands human interaction with the environment.",
+        "components": [
+          {
+            "code": "G2.6-8.2",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Analyze human changes to the environment in Washington and evaluate how those changes affect communities and ecosystems."
+          }
+        ]
+      },
+      {
+        "domain": "G3",
+        "title": "Understands the geographic context of global issues and events.",
+        "components": [
+          {
+            "code": "G3.6-8.2",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Evaluate the impact of global issues on local communities in Washington."
+          }
+        ]
+      }
+    ]
+  }
+  

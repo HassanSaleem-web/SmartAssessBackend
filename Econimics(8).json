@@ -1,0 +1,67 @@
+{
+    "subject": "Economics",
+    "gradeRange": "8",
+    "standards": [
+      {
+        "domain": "E1",
+        "title": "Understands that people have to make choices between wants and needs and evaluates the outcomes of those choices.",
+        "components": [
+          {
+            "code": "E1.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze examples of how groups and individuals have considered profit and personal values in making economic choices in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E2",
+        "title": "Understands how economic systems function.",
+        "components": [
+          {
+            "code": "E2.6-8.5",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze how the forces of supply and demand have affected the production, distribution, and consumption of goods, services, and resources in the United States in the past or present."
+          },
+          {
+            "code": "E2.6-8.6",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze how the forces of supply and demand have affected international trade in the United States in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E3",
+        "title": "Understands the government’s role in the economy.",
+        "components": [
+          {
+            "code": "E3.6-8.3",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze the influence of the U.S. government’s taxation, creation of currency, and tariffs in the past or present."
+          }
+        ]
+      },
+      {
+        "domain": "E4",
+        "title": "Understands the economic issues and problems that all societies face.",
+        "components": [
+          {
+            "code": "E4.6-8.5",
+            "region": "US",
+            "grade": "8th",
+            "description": "Analyze the distribution of wealth and sustainability of resources in the United States."
+          },
+          {
+            "code": "E4.6-8.6",
+            "region": "US",
+            "grade": "8th",
+            "description": "Explain the costs and benefits of trade policies to individuals, businesses, and society in the United States."
+          }
+        ]
+      }
+    ]
+  }
+  

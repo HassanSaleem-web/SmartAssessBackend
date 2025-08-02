@@ -1,0 +1,63 @@
+{
+  "subject": "English Language Arts",
+  "grade": "5",
+  "standards": [
+    {
+      "domain": "Reading: Literature",
+      "standards": [
+        "Quote accurately from a text when explaining and drawing inferences.",
+        "Determine a theme of a story, drama, or poem and summarize the text.",
+        "Compare and contrast two or more characters, settings, or events in a story using specific details.",
+        "Determine the meaning of figurative language such as metaphors and similes.",
+        "Explain how a series of chapters, scenes, or stanzas fits together to provide structure.",
+        "Describe how a narrator’s or speaker’s point of view influences the way events are described."
+      ]
+    },
+    {
+      "domain": "Reading: Informational Text",
+      "standards": [
+        "Determine two or more main ideas and explain how they are supported by key details.",
+        "Explain relationships or interactions between individuals, events, ideas, or concepts in a historical, scientific, or technical text.",
+        "Compare and contrast the overall structure of events, ideas, concepts, or information in two or more texts.",
+        "Analyze multiple accounts of the same event or topic, noting similarities and differences in point of view.",
+        "Draw on information from multiple print or digital sources to locate answers or solve problems efficiently."
+      ]
+    },
+    {
+      "domain": "Reading: Foundational Skills",
+      "standards": [
+        "Read with sufficient accuracy and fluency to support comprehension.",
+        "Use context to confirm or self-correct word recognition and understanding."
+      ]
+    },
+    {
+      "domain": "Writing",
+      "standards": [
+        "Write opinion pieces supporting a point of view with reasons and information.",
+        "Write informative/explanatory texts to examine a topic and convey ideas clearly.",
+        "Write narratives to develop real or imagined experiences with effective technique and descriptive details."
+      ]
+    },
+    {
+      "domain": "Speaking and Listening",
+      "standards": [
+        "Engage effectively in collaborative discussions, building on others’ ideas and expressing own clearly.",
+        "Summarize a written text read aloud or information presented in diverse media and formats.",
+        "Summarize the points a speaker makes and explain how each claim is supported by reasons and evidence.",
+        "Report on a topic or text or present an opinion in a logical sequence with relevant facts and descriptive details.",
+        "Include multimedia components and visual displays to enhance development of main ideas."
+      ]
+    },
+    {
+      "domain": "Language",
+      "standards": [
+        "Explain the function of conjunctions, prepositions, and interjections in general and their function in sentences.",
+        "Form and use the perfect verb tenses.",
+        "Use verb tense to convey various times, sequences, states, and conditions.",
+        "Use correlative conjunctions (e.g., either/or, neither/nor).",
+        "Use context clues and knowledge of Greek and Latin affixes and roots to determine word meaning.",
+        "Use reference materials to find the pronunciation and determine the precise meaning of key words and phrases."
+      ]
+    }
+  ]
+}

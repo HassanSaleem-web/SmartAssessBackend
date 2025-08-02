@@ -1,0 +1,73 @@
+{
+    "subject": "Social Studies Skills",
+    "gradeRange": "6-8",
+    "standards": [
+      {
+        "domain": "SSS1",
+        "title": "Uses critical reasoning skills to analyze and evaluate claims.",
+        "components": [
+          {
+            "code": "SSS1.6-8.1",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Analyze positions and evidence supporting an issue or an event."
+          },
+          {
+            "code": "SSS1.6-8.2",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Evaluate the logic of reasons for a position on an issue or event."
+          }
+        ]
+      },
+      {
+        "domain": "SSS2",
+        "title": "Uses inquiry-based research.",
+        "components": [
+          {
+            "code": "SSS2.6-8.1",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Create and use research questions to guide inquiry on an issue or event."
+          },
+          {
+            "code": "SSS2.6-8.2",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Evaluate the breadth, reliability, and credibility of primary and secondary sources to determine the need for new or additional information when researching an issue or event."
+          }
+        ]
+      },
+      {
+        "domain": "SSS3",
+        "title": "Deliberates public issues.",
+        "components": [
+          {
+            "code": "SSS3.6-8.1",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Engage in discussion, analyzing multiple viewpoints on public issues."
+          }
+        ]
+      },
+      {
+        "domain": "SSS4",
+        "title": "Creates a product that uses social studies content to support a thesis, and presents the product in an appropriate manner to a meaningful audience.",
+        "components": [
+          {
+            "code": "SSS4.6-8.1",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Analyze multiple factors, make generalizations, and interpret sources to formulate a thesis in a paper or presentation, while observing rules related to plagiarism and copyright."
+          },
+          {
+            "code": "SSS4.6-8.2",
+            "region": "General",
+            "grade": "6th-8th",
+            "description": "Use appropriate format to cite sources within an essay, presentation, and reference page."
+          }
+        ]
+      }
+    ]
+  }
+  

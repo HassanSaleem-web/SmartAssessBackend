@@ -1,0 +1,76 @@
+{
+    "subject": "English Language Arts",
+    "grade": "1",
+    "standards": [
+      {
+        "domain": "Reading: Literature",
+        "standards": [
+          "Ask and answer questions about key details in a text.",
+          "Retell stories, including key details, and demonstrate understanding of their central message or lesson.",
+          "Describe characters, settings, and major events in a story, using key details.",
+          "Identify words and phrases in stories or poems that suggest feelings or appeal to the senses.",
+          "Explain major differences between books that tell stories and books that give information.",
+          "Identify who is telling the story at various points in a text."
+        ]
+      },
+      {
+        "domain": "Reading: Informational Text",
+        "standards": [
+          "Ask and answer questions about key details in a text.",
+          "Identify the main topic and retell key details of a text.",
+          "Describe the connection between two individuals, events, ideas, or pieces of information in a text.",
+          "Ask and answer questions to help determine or clarify the meaning of words and phrases in a text.",
+          "Know and use various text features to locate key facts or information.",
+          "Distinguish between information provided by pictures or other illustrations and information provided by the words in a text.",
+          "Identify the reasons an author gives to support points in a text.",
+          "Identify basic similarities in and differences between two texts on the same topic."
+        ]
+      },
+      {
+        "domain": "Reading: Foundational Skills",
+        "standards": [
+          "Know the spelling-sound correspondences for common consonant digraphs.",
+          "Decode regularly spelled one-syllable words.",
+          "Know final -e and common vowel team conventions for representing long vowel sounds.",
+          "Use knowledge that every syllable must have a vowel sound to determine the number of syllables in a printed word.",
+          "Decode two-syllable words following basic patterns by breaking the words into syllables.",
+          "Read words with inflectional endings.",
+          "Recognize and read grade-appropriate irregularly spelled words."
+        ]
+      },
+      {
+        "domain": "Writing",
+        "standards": [
+          "Write opinion pieces in which they introduce the topic or name the book they are writing about, state an opinion, supply a reason, and provide some sense of closure.",
+          "Write informative/explanatory texts in which they name a topic, supply some facts, and provide some sense of closure.",
+          "Write narratives in which they recount two or more appropriately sequenced events, include some details, use temporal words to signal event order, and provide some sense of closure."
+        ]
+      },
+      {
+        "domain": "Speaking and Listening",
+        "standards": [
+          "Participate in collaborative conversations with diverse partners about grade 1 topics and texts.",
+          "Ask and answer questions about key details in a text read aloud or information presented orally.",
+          "Ask and answer questions to clarify understanding, gather additional information, or deepen comprehension.",
+          "Describe people, places, things, and events with relevant details, expressing ideas clearly.",
+          "Add drawings or other visual displays when appropriate to clarify ideas.",
+          "Produce complete sentences when appropriate to task and situation."
+        ]
+      },
+      {
+        "domain": "Language",
+        "standards": [
+          "Print all upper- and lowercase letters.",
+          "Use common, proper, and possessive nouns.",
+          "Use singular and plural nouns with matching verbs.",
+          "Use personal, possessive, and indefinite pronouns.",
+          "Use verbs to convey a sense of past, present, and future.",
+          "Use frequently occurring adjectives and conjunctions.",
+          "Use determiners (articles, demonstratives).",
+          "Use frequently occurring prepositions.",
+          "Produce and expand complete simple and compound declarative, interrogative, imperative, and exclamatory sentences."
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,66 @@
+{
+  "subject": "English Language Arts",
+  "grade": "2",
+  "standards": [
+    {
+      "domain": "Reading: Literature",
+      "standards": [
+        "Ask and answer such questions as who, what, where, when, why, and how to demonstrate understanding of key details.",
+        "Recount stories, including fables and folktales from diverse cultures, and determine their central message or lesson.",
+        "Describe how characters respond to major events and challenges.",
+        "Acknowledge differences in the points of view of characters.",
+        "Describe the overall structure of a story, including how the beginning introduces the story and the ending concludes it."
+      ]
+    },
+    {
+      "domain": "Reading: Informational Text",
+      "standards": [
+        "Identify the main topic of a multiparagraph text as well as the focus of specific paragraphs.",
+        "Describe the connection between a series of historical events, scientific ideas or concepts, or steps in technical procedures in a text.",
+        "Use text features (captions, bold print, subheadings, glossaries, indexes) to locate key facts or information.",
+        "Identify the main purpose of a text, including what the author wants to answer, explain, or describe."
+      ]
+    },
+    {
+      "domain": "Reading: Foundational Skills",
+      "standards": [
+        "Distinguish long and short vowels when reading regularly spelled one-syllable words.",
+        "Know spelling-sound correspondences for additional common vowel teams.",
+        "Decode regularly spelled two-syllable words with long vowels.",
+        "Decode words with common prefixes and suffixes.",
+        "Identify words with inconsistent but common spelling-sound correspondences.",
+        "Recognize and read grade-appropriate irregularly spelled words."
+      ]
+    },
+    {
+      "domain": "Writing",
+      "standards": [
+        "Write opinion pieces that introduce a topic or book, state an opinion, supply reasons with linking words, and provide a concluding statement.",
+        "Write informative/explanatory texts to examine a topic, use facts and definitions, and provide a concluding statement.",
+        "Write narratives with a well-elaborated event or sequence, using details and clear event order."
+      ]
+    },
+    {
+      "domain": "Speaking and Listening",
+      "standards": [
+        "Follow agreed-upon rules for discussions and build on others’ talk in conversations.",
+        "Recount or describe key ideas or details from text read aloud or information presented orally.",
+        "Ask and answer questions to clarify comprehension and gather deeper understanding.",
+        "Tell a story or recount an experience with appropriate facts and details.",
+        "Add visual displays to clarify ideas and feelings.",
+        "Produce complete sentences to provide requested detail or clarification."
+      ]
+    },
+    {
+      "domain": "Language",
+      "standards": [
+        "Use collective nouns and frequently occurring irregular plural nouns.",
+        "Use reflexive pronouns and past tense irregular verbs.",
+        "Use adjectives and adverbs and choose between them depending on usage.",
+        "Use simple and compound sentences.",
+        "Use knowledge of prefixes and suffixes to determine word meanings.",
+        "Consult reference materials to determine word meanings or clarify meaning of unknown words."
+      ]
+    }
+  ]
+}

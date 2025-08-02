@@ -1,0 +1,44 @@
+{
+    "subject": "Geography",
+    "gradeRange": "11-12",
+    "standards": [
+      {
+        "domain": "G1",
+        "title": "Understands the physical characteristics, cultural significance, and location of places, regions, and spatial patterns on the Earth’s surface.",
+        "components": [
+          { "code": "G1.11-12.1", "region": "US", "grade": "11th-12th", "description": "Analyze how differences in regions and spatial patterns have emerged in the United States from natural processes and human activities." },
+          { "code": "G1.11-12.2", "region": "US", "grade": "11th-12th", "description": "Analyze interactions and conflicts between various cultures in the United States." },
+          { "code": "G1.11-12.3", "region": "US", "grade": "11th-12th", "description": "Compare the causes and effects of voluntary and involuntary migration in the United States." },
+          { "code": "G1.11-12.4", "region": "US", "grade": "11th-12th", "description": "Analyze information from geographic tools, including computer-based mapping systems, to draw conclusions about an issue or event." },
+          { "code": "G1.11-12.5", "region": "US", "grade": "11th-12th", "description": "Evaluate the complexities of regions and the challenges involved in defining those regions." },
+          { "code": "G1.11-12.6", "region": "US", "grade": "11th-12th", "description": "Assess the social, economic, and political factors affecting cultural interactions." },
+          { "code": "G1.11-12.7", "region": "US", "grade": "11th-12th", "description": "Predict future opportunities and obstacles connected with international migration." }
+        ]
+      },
+      {
+        "domain": "G2",
+        "title": "Understands human interaction with the environment.",
+        "components": [
+          { "code": "G2.11-12.1", "region": "US", "grade": "11th-12th", "description": "Evaluate human interaction with the environment in the United States in the past or present." },
+          { "code": "G2.11-12.2", "region": "US", "grade": "11th-12th", "description": "Analyze how the United States balances protections of the environment and economic development." },
+          { "code": "G2.11-12.3", "region": "US", "grade": "11th-12th", "description": "Evaluate the impact of human settlement activities on the environmental and cultural characteristics of specific places and regions." },
+          { "code": "G2.11-12.4", "region": "US", "grade": "11th-12th", "description": "Evaluate how human interaction with the environment has affected economic growth and sustainability." },
+          { "code": "G2.11-12.5", "region": "US", "grade": "11th-12th", "description": "Evaluate how technology can create environmental problems and solutions." },
+          { "code": "G2.11-12.6", "region": "US", "grade": "11th-12th", "description": "Evaluate how political and economic decisions throughout time have influenced cultural and environmental characteristics of various places and regions." },
+          { "code": "G2.11-12.7", "region": "US", "grade": "11th-12th", "description": "Evaluate current opportunities and obstacles connected with international migration." }
+        ]
+      },
+      {
+        "domain": "G3",
+        "title": "Understands the geographic context of global issues and events.",
+        "components": [
+          { "code": "G3.11-12.1", "region": "US", "grade": "11th-12th", "description": "Evaluate elements of geography to trace the emergence of the United States as a global economic and political force in the past or present." },
+          { "code": "G3.11-12.2", "region": "US", "grade": "11th-12th", "description": "Evaluate the impact of economic activities and political decisions on spatial patterns within and among urban, suburban, and rural regions in the United States." },
+          { "code": "G3.11-12.3", "region": "US", "grade": "11th-12th", "description": "Analyze how the geography of globalization affects local diversity." },
+          { "code": "G3.11-12.4", "region": "US", "grade": "11th-12th", "description": "Evaluate how changes in the environmental and cultural characteristics of a place or region influence spatial patterns of trade and land use." },
+          { "code": "G3.11-12.5", "region": "US", "grade": "11th-12th", "description": "Evaluate how economic globalization and the expanding use of scarce resources contribute to conflict and cooperation within and among countries." }
+        ]
+      }
+    ]
+  }
+  

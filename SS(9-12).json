@@ -1,0 +1,107 @@
+{
+    "subject": "Social Studies Skills",
+    "gradeRange": "9-12",
+    "standards": [
+      {
+        "domain": "SSS1",
+        "title": "Uses critical reasoning skills to analyze and evaluate claims.",
+        "components": [
+          {
+            "code": "SSS1.9-12.1",
+            "description": "Critique the precision of a claim about an issue or event."
+          },
+          {
+            "code": "SSS1.9-12.2",
+            "description": "Critique the use of reasoning, sequencing, and details supporting the claim."
+          },
+          {
+            "code": "SSS1.9-12.3",
+            "description": "Explain points of agreement and disagreement that experts have regarding interpretations of sources."
+          },
+          {
+            "code": "SSS1.9-12.4",
+            "description": "Gather relevant information from multiple sources representing a wide range of views while using the origin, authority, structure, context, and corroborative value of the sources to guide the selection."
+          },
+          {
+            "code": "SSS1.9-12.5",
+            "description": "Explain the challenge and opportunities of addressing problems over place and time using disciplinary and interdisciplinary lenses."
+          }
+        ]
+      },
+      {
+        "domain": "SSS2",
+        "title": "Uses inquiry-based research.",
+        "components": [
+          {
+            "code": "SSS2.9-12.1",
+            "description": "Create compelling and supporting questions that focus on an idea, issue, or event."
+          },
+          {
+            "code": "SSS2.9-12.2",
+            "description": "Evaluate the validity, reliability, and credibility of sources when researching an issue or event."
+          },
+          {
+            "code": "SSS2.9-12.3",
+            "description": "Determine the kinds of sources and relevant information that are helpful, taking into consideration multiple points of view represented in the sources, the types of sources available, and the potential uses of the sources."
+          },
+          {
+            "code": "SSS2.9-12.4",
+            "description": "Explain how supporting questions contribute to an inquiry and how, through engaging source work, new compelling and supporting questions emerge."
+          }
+        ]
+      },
+      {
+        "domain": "SSS3",
+        "title": "Deliberates public issues.",
+        "components": [
+          {
+            "code": "SSS3.9-12.1",
+            "description": "Evaluate one’s own viewpoint and the viewpoints of others in the context of a discussion."
+          },
+          {
+            "code": "SSS3.9-12.2",
+            "description": "Apply a range of deliberative and democratic strategies and procedures to make decisions and take action in their classrooms, school, or out-of-school civic context."
+          },
+          {
+            "code": "SSS3.9-12.3",
+            "description": "Use appropriate deliberative processes in multiple settings."
+          },
+          {
+            "code": "SSS3.9-12.4",
+            "description": "Analyze the impact and the appropriate roles of personal interests and perspectives on the application of civic virtues, democratic principles, constitutional rights, and human rights."
+          },
+          {
+            "code": "SSS3.9-12.5",
+            "description": "Integrate evidence from multiple relevant historical sources and interpretations into a reasoned argument about the past and its relationship to the present."
+          },
+          {
+            "code": "SSS3.9-12.6",
+            "description": "Assess options for individual and collective action to address local, regional, or global problems by engaging in self-reflection, strategy identification, and complex causal reasoning."
+          }
+        ]
+      },
+      {
+        "domain": "SSS4",
+        "title": "Creates a product that uses social studies content to support a claim and presents the product in an appropriate manner to a meaningful audience.",
+        "components": [
+          {
+            "code": "SSS4.9-12.1",
+            "description": "Evaluate multiple reasons or factors to develop a position paper or presentation."
+          },
+          {
+            "code": "SSS4.9-12.2",
+            "description": "Construct arguments using precise and knowledgeable claims, with evidence from multiple and reliable sources, while acknowledging counterclaims and evidentiary weaknesses."
+          },
+          {
+            "code": "SSS4.9-12.3",
+            "description": "Present adaptations of arguments and explanations that feature evocative ideas and perspectives on issues and topics to reach a range of audiences and venues outside the classroom, using print and oral technologies and digital technologies."
+          },
+          {
+            "code": "SSS4.9-12.4",
+            "description": "Create strategies to avoid plagiarism and respect intellectual property when developing a paper or presentation."
+          }
+        ]
+      }
+    ]
+  }
+  

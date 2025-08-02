@@ -1,0 +1,73 @@
+{
+    "subject": "History",
+    "gradeRange": "6",
+    "standards": [
+      {
+        "domain": "H1",
+        "title": "Understands historical chronology.",
+        "components": [
+          {
+            "code": "H1.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Analyze different cultural measurements of time."
+          },
+          {
+            "code": "H1.6-8.2",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain how the rise of civilizations defines eras in world history in two or more regions of the world."
+          },
+          {
+            "code": "H1.6-8.3",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain how the rise of civilizations defines two or more eras."
+          }
+        ]
+      },
+      {
+        "domain": "H2",
+        "title": "Understands and analyzes causal factors that have shaped major events in history.",
+        "components": [
+          {
+            "code": "H2.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Explain and analyze how individuals, movements, cultural and ethnic groups, and technology from past civilizations have shaped world history."
+          }
+        ]
+      },
+      {
+        "domain": "H3",
+        "title": "Understands that there are multiple perspectives and interpretations of historical events.",
+        "components": [
+          {
+            "code": "H3.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Analyze and interpret historical materials from a variety of perspectives in world history."
+          },
+          {
+            "code": "H3.6-8.2",
+            "region": "World",
+            "grade": "6th",
+            "description": "Analyze multiple causal factors to create and support a claim about major events in world history."
+          }
+        ]
+      },
+      {
+        "domain": "H4",
+        "title": "Understands how historical events inform analysis of contemporary issues and events.",
+        "components": [
+          {
+            "code": "H4.6-8.1",
+            "region": "World",
+            "grade": "6th",
+            "description": "Analyze how a historical event in world history helps us to understand contemporary issues and events."
+          }
+        ]
+      }
+    ]
+  }
+  

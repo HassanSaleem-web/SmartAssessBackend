@@ -1,0 +1,73 @@
+{
+    "subject": "History",
+    "gradeRange": "7",
+    "standards": [
+      {
+        "domain": "H1",
+        "title": "Understands historical chronology.",
+        "components": [
+          {
+            "code": "H1.6-8.4",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Analyze a major historical event and how it is represented on timelines from different cultural perspectives, including those of indigenous people."
+          },
+          {
+            "code": "H1.6-8.5",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain how themes and developments have defined eras in Washington state history from 1854 to the present."
+          }
+        ]
+      },
+      {
+        "domain": "H2",
+        "title": "Understands and analyzes causal factors that have shaped major events in history.",
+        "components": [
+          {
+            "code": "H2.6-8.2",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain and analyze how individuals and movements have shaped Washington state history since statehood."
+          },
+          {
+            "code": "H2.6-8.3",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain and analyze how cultures and ethnic groups contributed to Washington state history since statehood."
+          },
+          {
+            "code": "H2.6-8.4",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain and analyze how technology and ideas have impacted Washington state history since statehood."
+          }
+        ]
+      },
+      {
+        "domain": "H3",
+        "title": "Understands that there are multiple perspectives and interpretations of historical events.",
+        "components": [
+          {
+            "code": "H3.6-8.3",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Explain, analyze, and develop an argument about how Washington state has been impacted by individuals, movements, cultures, and technology."
+          }
+        ]
+      },
+      {
+        "domain": "H4",
+        "title": "Understands how historical events inform analysis of contemporary issues and events.",
+        "components": [
+          {
+            "code": "H4.6-8.2",
+            "region": "WA",
+            "grade": "7th",
+            "description": "Analyze how a historical event in Washington state history helps us to understand contemporary issues and events."
+          }
+        ]
+      }
+    ]
+  }
+  

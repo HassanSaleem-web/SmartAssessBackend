@@ -1,0 +1,106 @@
+{
+    "subject": "Civics",
+    "gradeRange": "11-12",
+    "standards": [
+      {
+        "domain": "C1",
+        "title": "Understands key ideals and principles of the United States, including those in the Declaration of Independence, Constitution, and other foundational documents.",
+        "components": [
+          {
+            "code": "C1.11-12.1",
+            "grade": "11th-12th",
+            "description": "Analyze and evaluate the ideas and principles contained in the foundational documents of the United States, and explain how they influence the social and political system."
+          },
+          {
+            "code": "C1.11-12.2",
+            "grade": "11th-12th",
+            "description": "Analyze the impact of constitutions, laws, treaties and international agreements on the maintenance of national and international order."
+          },
+          {
+            "code": "C1.11-12.3",
+            "grade": "11th-12th",
+            "description": "Apply civic virtues and democratic principles when working with others."
+          }
+        ]
+      },
+      {
+        "domain": "C2",
+        "title": "Understands the purposes, organization, and function of governments, laws, and political systems.",
+        "components": [
+          {
+            "code": "C2.11-12.1",
+            "grade": "11th-12th",
+            "description": "Analyze citizens’ and institutions’ effectiveness in addressing social and political problems at the local, state, tribal, national and/or international level."
+          },
+          {
+            "code": "C2.11-12.2",
+            "grade": "11th-12th",
+            "description": "Analyze the origins, functions, and structure of government with reference to the United States, Washington state, and tribal constitutions."
+          },
+          {
+            "code": "C2.11-12.3",
+            "grade": "11th-12th",
+            "description": "Evaluate the effectiveness of the American system compared to international governmental systems."
+          },
+          {
+            "code": "C2.11-12.4",
+            "grade": "11th-12th",
+            "description": "Evaluate the effectiveness of our system of checks and balances in limiting the power of government at the national, state, and local levels."
+          }
+        ]
+      },
+      {
+        "domain": "C3",
+        "title": "Understands the purposes and organization of tribal and international relationships and U.S. foreign policy.",
+        "components": [
+          {
+            "code": "C3.11-12.1",
+            "grade": "11th-12th",
+            "description": "Evaluate the impact of constitutions, laws, treaties, and international agreements on the maintenance of national and international order or disorder."
+          },
+          {
+            "code": "C3.11-12.2",
+            "grade": "11th-12th",
+            "description": "Critique relationships among governments, civil societies, and economic markets."
+          },
+          {
+            "code": "C3.11-12.3",
+            "grade": "11th-12th",
+            "description": "Evaluate the impact of international agreements on contemporary world issues."
+          },
+          {
+            "code": "C3.11-12.4",
+            "grade": "11th-12th",
+            "description": "Evaluate the impact of international organizations on United States foreign policy."
+          }
+        ]
+      },
+      {
+        "domain": "C4",
+        "title": "Understands civic involvement.",
+        "components": [
+          {
+            "code": "C4.11-12.1",
+            "grade": "11th-12th",
+            "description": "Use appropriate deliberative processes in multiple settings."
+          },
+          {
+            "code": "C4.11-12.2",
+            "grade": "11th-12th",
+            "description": "Analyze and evaluate ways of influencing local, state, and national governments and international organizations to establish or preserve individual rights and/or promote the common good."
+          },
+          {
+            "code": "C4.11-12.3",
+            "grade": "11th-12th",
+            "description": "Evaluate the impact and the appropriate roles of personal interests and perspectives on the application of civic virtues, democratic principles, constitutional rights, and human rights."
+          },
+          {
+            "code": "C4.11-12.4",
+            "grade": "11th-12th",
+            "description": "Evaluate citizens’ and institutions’ effectiveness in addressing social and political problems at the local, state, tribal, national, and/or international level."
+          }
+        ]
+      }
+    ]
+  }
+  
