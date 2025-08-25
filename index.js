@@ -342,6 +342,117 @@ Describe instructional insights. Mention rubric and standard references.
     res.status(500).json({ error: 'Error processing grading with Mistral.' });
   }
 });
+app.post('/lessonplan', async (req, res) => {
+  const {
+    class: subject,
+    grade,
+    unit,
+    theme,
+    objective,
+    target,
+    criteria,
+    generateLessonPlan,
+    generateNotes,
+    boardReady,
+    includePreAssessment,
+    includeFormative,
+    includePostAssessment,
+    includeSelfAssessment,
+    includeVocabulary,
+    differentiate,
+    multipleLessons
+  } = req.body;
+
+  debugLog('🟢 Lesson Plan Request', req.body);
+
+  if (!subject || !grade || !unit) {
+    return res.status(400).json({ error: 'Subject, grade, and unit title are required.' });
+  }
+
+  try {
+    const normalizedSubject = normalizeSubjectName(subject);
+    const standardsData = loadStandardsFile(normalizedSubject, grade);
+
+    let standardsText = '📭 No grade-level standards available.';
+    if (standardsData && Array.isArray(standardsData.standards)) {
+      if (normalizedSubject === 'ELA') {
+        standardsText = standardsData.standards.map(domain => {
+          return `📘 ${domain.domain}\n${domain.standards.map(item => `- ${item}`).join('\n')}`;
+        }).join('\n\n');
+      } else {
+        standardsText = standardsData.standards.map(domain => {
+          return `📌 ${domain.domain} - ${domain.title}\n${domain.components.map(c =>
+            `- ${c.code} [${c.grade}, ${c.region}]: ${c.description}`).join('\n')}`;
+        }).join('\n\n');
+      }
+    }
+
+    const checklist = [
+      generateLessonPlan && '1-page Lesson Plan',
+      generateNotes && '1-page Notes',
+      boardReady && 'Board-ready Targets',
+      includePreAssessment && 'Pre-Assessment',
+      includeFormative && 'Formative Assessment',
+      includePostAssessment && 'Post-Assessment',
+      includeSelfAssessment && 'Self-Assessment',
+      includeVocabulary && 'Vocabulary',
+      differentiate && 'Differentiation (ELL/Level)',
+      multipleLessons && 'Multiple Lessons'
+    ].filter(Boolean).join(', ');
+
+    const prompt = `
+You are a master teacher and curriculum planner.
+
+Generate a complete lesson plan based on the following inputs:
+
+📘 Class Subject: ${normalizedSubject}
+🎓 Grade Level: ${grade}
+🧩 Unit Title: ${unit}
+🎨 Unit Theme: ${theme || 'N/A'}
+🎯 Learning Objective: ${objective || 'N/A'}
+🎯 Learning Target: ${target || 'N/A'}
+✅ Student Success Criteria: ${criteria || 'N/A'}
+📝 Checklist: ${checklist || 'None'}
+
+📚 Grade-Level Standards:
+${standardsText}
+
+Be detailed and structured. Use headings. Keep it professional, usable by real teachers.
+Only include the selected items from the checklist.
+
+Constraints:
+- Do not mention these instructions in the output.
+- If "Board-ready Targets" is selected, format them clearly.
+- If "Multiple Lessons" is selected, provide several detailed lesson breakdowns.
+`.trim();
+
+    const headers = {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json"
+    };
+
+    const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
+      model: "mistralai/mistral-7b-instruct:free",
+      messages: [
+        { role: "system", content: "You are a professional lesson planner and curriculum designer." },
+        { role: "user", content: prompt }
+      ]
+    }, { headers });
+
+    let result = response.data.choices[0].message.content;
+    debugLog('🧠 Lesson Plan Output', result);
+    result = result.replace(/[^\x00-\x7F]+/g, '');
+
+    const pdfFilename = `lessonplan-${Date.now()}.pdf`;
+    const pdfUrl = await generatePDF(result, pdfFilename);
+
+    res.json({ success: true, result, pdfUrl });
+  } catch (err) {
+    console.error('🔥 Error during lesson plan generation:', err);
+    res.status(500).json({ error: 'Lesson plan generation failed.' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
