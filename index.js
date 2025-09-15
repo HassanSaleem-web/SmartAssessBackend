@@ -453,6 +453,102 @@ Constraints:
   }
 });
 
+app.post('/assignment', async (req, res) => {
+  const {
+    subject,
+    grade,
+    unit,
+    topic,
+    objectives,
+    includeRubric,
+    includeInstructions,
+    includeScaffoldedSupport,
+    requireResearch,
+    includeReflection,
+    multipleVersions
+  } = req.body;
+
+  debugLog('🟢 Assignment Generator Request', req.body);
+
+  // Validate required fields
+  if (!subject || !grade || !unit || !topic) {
+    return res.status(400).json({ error: 'Subject, grade, unit title, and topic are required.' });
+  }
+
+  try {
+    // Normalize subject & load standards
+    const normalizedSubject = normalizeSubjectName(subject);
+    const standardsData = loadStandardsFile(normalizedSubject, grade);
+
+    let standardsText = '📭 No grade-level standards available.';
+    if (standardsData && Array.isArray(standardsData.standards)) {
+      if (normalizedSubject === 'ELA') {
+        standardsText = standardsData.standards.map(domain => {
+          return `📘 ${domain.domain}\n${domain.standards.map(item => `- ${item}`).join('\n')}`;
+        }).join('\n\n');
+      } else {
+        standardsText = standardsData.standards.map(domain => {
+          return `📌 ${domain.domain} - ${domain.title}\n${domain.components.map(c =>
+            `- ${c.code} [${c.grade}, ${c.region}]: ${c.description}`
+          ).join('\n')}`;
+        }).join('\n\n');
+      }
+    }
+
+    // Build checklist string from checkboxes
+    const features = [
+      includeRubric && 'Rubric',
+      includeInstructions && 'Student Instructions',
+      includeScaffoldedSupport && 'Scaffolded Support',
+      requireResearch && 'Research Required',
+      includeReflection && 'Student Reflection',
+      multipleVersions && 'Multiple Versions'
+    ].filter(Boolean).join(', ') || 'None';
+
+    // Build the prompt for AI
+    const prompt = `
+You are a master teacher designing classroom assignments.
+
+Create a detailed assignment based on the following:
+
+📘 Subject: ${normalizedSubject}
+🎓 Grade Level: ${grade}
+🧩 Unit Title: ${unit}
+📚 Assignment Topic: ${topic}
+🎯 Learning Objectives: ${objectives || 'N/A'}
+✅ Requested Features: ${features}
+
+📚 Grade-Level Standards:
+${standardsText}
+
+Please include all the requested features clearly. Use headings, structure, and professional format appropriate for teachers.`;
+
+    const headers = {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json"
+    };
+
+    const aiResponse = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
+      model: "mistralai/mistral-7b-instruct:free",
+      messages: [
+        { role: "system", content: "You are an assignment designer educator." },
+        { role: "user", content: prompt }
+      ]
+    }, { headers });
+
+    let result = aiResponse.data.choices[0].message.content;
+    debugLog('🧠 Assignment Generator Output', result);
+    result = result.replace(/[^\x00-\x7F]+/g, '');  // optional clean non-ASCII
+
+    const pdfFilename = `assignment-${Date.now()}.pdf`;
+    const pdfUrl = await generatePDF(result, pdfFilename);
+
+    res.json({ success: true, result, pdfUrl });
+  } catch (err) {
+    console.error('🔥 Error during assignment generation:', err);
+    res.status(500).json({ error: 'Assignment generation failed.' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
