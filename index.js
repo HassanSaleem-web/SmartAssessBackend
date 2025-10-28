@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -6,6 +7,7 @@ const path = require('path');
 const PDFDocument = require('pdfkit');
 require('dotenv').config();
 const axios = require('axios');
+const FormData = require("form-data");
 
 const app = express();
 const PORT = 5000;
@@ -222,38 +224,475 @@ Respond with only the exact subject name from the list above. Do NOT explain. Do
   return normalizeSubjectName(rawSubject);
 }
 
-app.post('/grade', async (req, res) => {
-  const { gradeLevel, intensity, submission } = req.body;
-  debugLog('🟢 Incoming Payload', req.body);
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" }); // temp storage for uploaded files
+const { spawn } = require("child_process");
 
+
+async function convertPdfToImages(pdfPath, outputDir) {
+  return new Promise((resolve, reject) => {
+    const process = spawn("python", ["convert_pdf_pymupdf.py", pdfPath, outputDir]);
+
+    let data = "";
+    let error = "";
+
+    process.stdout.on("data", (chunk) => {
+      data += chunk.toString();
+    });
+
+    process.stderr.on("data", (chunk) => {
+      error += chunk.toString();
+    });
+
+    process.on("close", (code) => {
+      if (code !== 0) {
+        console.error("Python Error:", error || data);
+        return reject(error || "PDF conversion failed");
+      }
+      try {
+        const result = JSON.parse(data);
+        if (result.success) resolve(result.pages);
+        else reject(result.error || "Unknown error from Python");
+      } catch (err) {
+        reject("Invalid JSON output from Python: " + err.message);
+      }
+    });
+  });
+}
+
+
+// app.post("/grade", upload.single("file"), async (req, res) => {
+//   const { gradeLevel, intensity, submission } = req.body || {};
+//   debugLog("🟢 Incoming Payload", {
+//     gradeLevel,
+//     intensity,
+//     handwriting: req.body?.handwriting,
+//     submission,
+//     file: req.file?.originalname,
+//   });
+
+//   // ---------------- FILE MODE ----------------
+//   if (req.file) {
+//     try {
+//       const headers = {
+//         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+//         "Content-Type": "application/json",
+//         "OpenAI-Beta": "assistants=v2",
+//       };
+
+//       // Step 1: Upload file to OpenAI (as vision input for images)
+//       const fileForm = new FormData();
+//       fileForm.append("file", fs.createReadStream(req.file.path), req.file.originalname);
+//       fileForm.append("purpose", "vision"); // ✅ Important for GPT-4o vision
+
+//       const uploadResp = await axios.post("https://api.openai.com/v1/files", fileForm, {
+//         headers: {
+//           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+//           ...fileForm.getHeaders(),
+//         },
+//       });
+
+//       const fileId = uploadResp.data.id;
+//       debugLog("📤 Uploaded File to OpenAI", fileId);
+
+//       // Step 2: Create a new thread
+//       const threadResp = await axios.post("https://api.openai.com/v1/threads", {}, { headers });
+//       const threadId = threadResp.data.id;
+//       debugLog("🧵 Created Thread", threadId);
+
+//       // Step 3: Prepare rubric + message content
+//       const rubricDetails = getAllDistinguishedComponents();
+//       const condensedRubric = rubricDetails
+//         .map((r) => `${r.code} (${r.criterion}) - ${r.component}`)
+//         .join("\n");
+
+//       const ext = path.extname(req.file.originalname).toLowerCase();
+//       const isImage = [".png", ".jpg", ".jpeg", ".webp"].includes(ext);
+
+//       // ✅ Compose message correctly (no attachments!)
+//       const messagePayload = {
+//         role: "user",
+//         content: [
+//           {
+//             type: "text",
+//             text: `
+// You are an expert educator and grading assistant.
+
+// Grade Level: ${gradeLevel}
+// Grading Intensity: ${intensity}
+// Handwriting Mode: ${isImage ? "ON" : "OFF"}
+
+// Use the following Rubric Components to evaluate the uploaded student submission.
+
+// 🎯 Rubric Components:
+// ${condensedRubric}
+
+// 📝 Provide your evaluation in this format:
+
+// ---
+// **Grading Report**
+// **Overall Score (out of 4)**
+// **Rubric Coverage**: All components reviewed.
+// ---
+// **Component Analysis**
+// (For each rubric code, provide Explanation, Evidence, Suggestions)
+// ---
+// **Feedback to Student**
+// ---
+// **Feedback to Teacher**
+//             `,
+//           },
+//           isImage
+//             ? {
+//                 type: "image_file",
+//                 image_file: { file_id: fileId }, // ✅ file uploaded with purpose: "vision"
+//               }
+//             : {
+//                 type: "text",
+//                 text: `Please grade the following text submission attached under file ID: ${fileId}`,
+//               },
+//         ],
+//       };
+
+//       // Step 4: Send message to thread
+//       await axios.post(
+//         `https://api.openai.com/v1/threads/${threadId}/messages`,
+//         messagePayload,
+//         { headers }
+//       );
+
+//       // Step 5: Run the assistant
+//       const runResp = await axios.post(
+//         `https://api.openai.com/v1/threads/${threadId}/runs`,
+//         { assistant_id: process.env.OPENAI_ASSISTANT_ID },
+//         { headers }
+//       );
+
+//       const runId = runResp.data.id;
+//       debugLog("🏃 Run started", runId);
+
+//       // Step 6: Poll until finished
+//       let runStatus = "in_progress";
+//       while (["in_progress", "queued"].includes(runStatus)) {
+//         await new Promise((r) => setTimeout(r, 2000));
+//         const check = await axios.get(
+//           `https://api.openai.com/v1/threads/${threadId}/runs/${runId}`,
+//           { headers }
+//         );
+//         runStatus = check.data.status;
+//         debugLog("⏳ Run status", runStatus);
+//       }
+
+//       if (runStatus !== "completed") {
+//         return res.status(500).json({ error: "Assistant run failed." });
+//       }
+
+//       // Step 7: Retrieve assistant response
+//       const messagesResp = await axios.get(
+//         `https://api.openai.com/v1/threads/${threadId}/messages`,
+//         { headers }
+//       );
+//       const messages = messagesResp.data.data;
+//       const assistantReply =
+//         messages.find((m) => m.role === "assistant")?.content?.[0]?.text?.value || "";
+
+//       if (!assistantReply.trim()) {
+//         return res.status(500).json({ error: "Assistant returned empty content." });
+//       }
+
+//       // Step 8: Generate PDF
+//       const pdfFilename = `grading-${Date.now()}.pdf`;
+//       const pdfUrl = await generatePDF(assistantReply, pdfFilename);
+
+//       return res.json({ success: true, result: assistantReply, pdfUrl });
+//     } catch (err) {
+//       console.error("🔥 Error in file grading:", err.response?.data || err.message);
+//       return res.status(500).json({ error: "File grading failed." });
+//     }
+//   }
+
+//   // ---------------- TEXT MODE ----------------
+//   if (!submission || !submission.trim()) {
+//     return res.status(400).json({ error: "Assignment text is required." });
+//   }
+
+//   try {
+//     const subject = await identifySubject(submission);
+//     debugLog("📚 Identified Subject", subject);
+
+//     const standardsData = loadStandardsFile(subject, gradeLevel);
+//     const rubricDetails = getAllDistinguishedComponents();
+
+//     let standardsText = "📭 No grade-level standards available. Using rubric only.";
+//     if (standardsData && Array.isArray(standardsData.standards)) {
+//       if (subject === "ELA") {
+//         standardsText = standardsData.standards
+//           .map((domain) => `📘 ${domain.domain}\n${domain.standards.map((item) => `- ${item}`).join("\n")}`)
+//           .join("\n\n");
+//       } else {
+//         standardsText = standardsData.standards
+//           .map(
+//             (domain) =>
+//               `📌 ${domain.domain} - ${domain.title}\n${domain.components
+//                 .map((c) => `- ${c.code}: ${c.description}`)
+//                 .join("\n")}`
+//           )
+//           .join("\n\n");
+//       }
+//     }
+
+//     const condensedRubric = rubricDetails.map((r) => `${r.code} (${r.criterion}) - ${r.component}`).join("\n");
+
+//     const prompt = `
+// You are an expert educator and grading assistant.
+
+// Grade Level: ${gradeLevel}
+// Grading Intensity: ${intensity}
+// Identified Subject: ${subject}
+// Handwriting Mode: OFF
+
+// Use the following Rubric Components and Grade-Level Standards to evaluate the student submission.
+
+// 🎯 Rubric Components:
+// ${condensedRubric}
+
+// 📚 Grade-Level Standards:
+// ${standardsText}
+
+// ✍️ Student Submission:
+// "${submission}"
+
+// 📝 Provide your evaluation in this format:
+
+// ---
+// **Grading Report**
+// **Overall Score (out of 4)**
+// **Rubric Coverage**: All components reviewed.
+// ---
+// **Component Analysis**
+// (For each rubric code, provide Explanation, Evidence, and Suggestions)
+// ---
+// **Feedback to Student**
+// ---
+// **Feedback to Teacher**
+//     `.trim();
+
+//     const headers = {
+//       Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+//       "Content-Type": "application/json",
+//     };
+
+//     const aiResponse = await axios.post(
+//       "https://openrouter.ai/api/v1/chat/completions",
+//       {
+//         model: "mistralai/mistral-7b-instruct:free",
+//         messages: [
+//           { role: "system", content: "You are an educational grading assistant." },
+//           { role: "user", content: prompt },
+//         ],
+//       },
+//       { headers }
+//     );
+
+//     let result = aiResponse.data.choices[0].message?.content || "";
+//     debugLog("🧠 Raw Model Output", result);
+
+//     if (!result.trim()) {
+//       return res.status(500).json({ error: "Model returned empty content." });
+//     }
+
+//     const pdfFilename = `grading-${Date.now()}.pdf`;
+//     const pdfUrl = await generatePDF(result, pdfFilename);
+
+//     res.json({ success: true, result, pdfUrl });
+//   } catch (err) {
+//     console.error("🔥 Error during grading:", err);
+//     res.status(500).json({ error: "Error processing grading with Mistral." });
+//   }
+// });
+app.post("/grade", upload.single("file"), async (req, res) => {
+  const { gradeLevel, intensity, submission } = req.body || {};
+  console.log("🟢 Incoming Payload", {
+    gradeLevel,
+    intensity,
+    submission,
+    file: req.file?.originalname,
+  });
+
+  // ---------------- FILE MODE ----------------
+  if (req.file) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+        "OpenAI-Beta": "assistants=v2",
+      };
+
+      const ext = path.extname(req.file.originalname).toLowerCase();
+      const isImage = [".png", ".jpg", ".jpeg", ".webp"].includes(ext);
+      const isPdf = ext === ".pdf";
+
+      let uploadedFileIds = [];
+      let outputDir = "";
+
+      // ✅ Handle PDF uploads
+      if (isPdf) {
+        outputDir = path.join("uploads", `pdfpages-${Date.now()}`);
+        const pages = await convertPdfToImages(req.file.path, outputDir);
+        console.log(`📄 PDF converted into ${pages.length} pages`);
+
+        for (const pagePath of pages) {
+          const fileForm = new FormData();
+          fileForm.append("file", fs.createReadStream(pagePath), path.basename(pagePath));
+          fileForm.append("purpose", "vision");
+          const uploadResp = await axios.post("https://api.openai.com/v1/files", fileForm, {
+            headers: {
+              Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+              ...fileForm.getHeaders(),
+            },
+          });
+          uploadedFileIds.push(uploadResp.data.id);
+        }
+      } else {
+        // ✅ Normal image upload
+        const fileForm = new FormData();
+        fileForm.append("file", fs.createReadStream(req.file.path), req.file.originalname);
+        fileForm.append("purpose", "vision");
+        const uploadResp = await axios.post("https://api.openai.com/v1/files", fileForm, {
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            ...fileForm.getHeaders(),
+          },
+        });
+        uploadedFileIds = [uploadResp.data.id];
+      }
+
+      console.log("📤 Uploaded Files:", uploadedFileIds);
+
+      // ✅ Create thread
+      const threadResp = await axios.post("https://api.openai.com/v1/threads", {}, { headers });
+      const threadId = threadResp.data.id;
+
+      // ✅ Rubric and prompt
+      const rubricDetails = getAllDistinguishedComponents();
+      const condensedRubric = rubricDetails
+        .map((r) => `${r.code} (${r.criterion}) - ${r.component}`)
+        .join("\n");
+
+      const messagePayload = {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `
+You are an expert educator and grading assistant.
+
+Grade Level: ${gradeLevel}
+Grading Intensity: ${intensity}
+Handwriting Mode: ${isImage || isPdf ? "ON" : "OFF"}
+
+Use the following Rubric Components to evaluate the uploaded student submission.
+
+🎯 Rubric Components:
+${condensedRubric}
+
+📝 Provide your evaluation in this format:
+
+---
+**Grading Report**
+**Overall Score (out of 4)**
+**Rubric Coverage**: All components reviewed.
+---
+**Component Analysis**
+(For each rubric code, provide Explanation, Evidence, Suggestions)
+---
+**Feedback to Student**
+---
+**Feedback to Teacher**
+            `,
+          },
+          ...(isImage || isPdf
+            ? uploadedFileIds.map((fid) => ({
+                type: "image_file",
+                image_file: { file_id: fid },
+              }))
+            : [
+                {
+                  type: "text",
+                  text: `Please grade the following text submission attached under file ID: ${uploadedFileIds[0]}`,
+                },
+              ]),
+        ],
+      };
+
+      // ✅ Send message
+      await axios.post(`https://api.openai.com/v1/threads/${threadId}/messages`, messagePayload, {
+        headers,
+      });
+
+      // ✅ Run assistant
+      const runResp = await axios.post(
+        `https://api.openai.com/v1/threads/${threadId}/runs`,
+        { assistant_id: process.env.OPENAI_ASSISTANT_ID },
+        { headers }
+      );
+      const runId = runResp.data.id;
+
+      // ✅ Poll until done
+      let runStatus = "in_progress";
+      while (["in_progress", "queued"].includes(runStatus)) {
+        await new Promise((r) => setTimeout(r, 2000));
+        const check = await axios.get(
+          `https://api.openai.com/v1/threads/${threadId}/runs/${runId}`,
+          { headers }
+        );
+        runStatus = check.data.status;
+        console.log("⏳ Run status", runStatus);
+      }
+
+      if (runStatus !== "completed") {
+        return res.status(500).json({ error: "Assistant run failed." });
+      }
+
+      // ✅ Retrieve response
+      const messagesResp = await axios.get(
+        `https://api.openai.com/v1/threads/${threadId}/messages`,
+        { headers }
+      );
+      const messages = messagesResp.data.data;
+      const assistantReply =
+        messages.find((m) => m.role === "assistant")?.content?.[0]?.text?.value || "";
+
+      if (!assistantReply.trim()) {
+        return res.status(500).json({ error: "Assistant returned empty content." });
+      }
+
+      // ✅ Generate PDF
+      const pdfFilename = `grading-${Date.now()}.pdf`;
+      const pdfUrl = await generatePDF(assistantReply, pdfFilename);
+
+      if (isPdf && outputDir) fs.rmSync(outputDir, { recursive: true, force: true });
+
+      return res.json({ success: true, result: assistantReply, pdfUrl });
+    } catch (err) {
+      console.error("🔥 Error in file grading:", err.response?.data || err.message);
+      return res.status(500).json({ error: "File grading failed." });
+    }
+  }
+
+  // ---------------- TEXT MODE ----------------
   if (!submission || !submission.trim()) {
-    return res.status(400).json({ error: 'Assignment text is required.' });
+    return res.status(400).json({ error: "Assignment text is required." });
   }
 
   try {
     const subject = await identifySubject(submission);
-    debugLog('📚 Identified Subject', subject);
-
     const standardsData = loadStandardsFile(subject, gradeLevel);
     const rubricDetails = getAllDistinguishedComponents();
 
-    let standardsText = '📭 No grade-level standards available. Using rubric only.';
-
-    if (standardsData && Array.isArray(standardsData.standards)) {
-      console.log(`🧩 Formatting standards for subject: ${subject}`);
-
-      if (subject === 'ELA') {
-        standardsText = standardsData.standards.map(domain => {
-          return `📘 ${domain.domain}\n${domain.standards.map(item => `- ${item}`).join('\n')}`;
-        }).join('\n\n');
-      } else {
-        standardsText = standardsData.standards.map(domain => {
-          return `📌 ${domain.domain} - ${domain.title}\n${domain.components.map(c =>
-            `- ${c.code} [${c.grade}, ${c.region}]: ${c.description}`
-          ).join('\n')}`;
-        }).join('\n\n');
-      }
-    }
+    const condensedRubric = rubricDetails
+      .map((r) => `${r.code} (${r.criterion}) - ${r.component}`)
+      .join("\n");
 
     const prompt = `
 You are an expert educator and grading assistant.
@@ -261,85 +700,42 @@ You are an expert educator and grading assistant.
 Grade Level: ${gradeLevel}
 Grading Intensity: ${intensity}
 Identified Subject: ${subject}
+Handwriting Mode: OFF
 
 Use the following Rubric Components and Grade-Level Standards to evaluate the student submission.
 
 🎯 Rubric Components:
-${rubricDetails.map(r => `• ${r.code} (${r.criterion}) - ${r.component}: ${r.distinguished}`).join('\n')}
-
-📚 Grade-Level Standards:
-${standardsText}
+${condensedRubric}
 
 ✍️ Student Submission:
 "${submission}"
-
-📝 Provide your evaluation in this format:
-
----
-
-**Grading Report**
-
-**Overall Score (out of 4)**:  
-**Rubric Coverage**: All components reviewed at distinguished level.
-
----
-
-**Component Analysis**
-
-${rubricDetails.map(r => `🔹 ${r.code} - ${r.component}  
-- Explanation:  
-- Evidence:  
-- Suggestions:`).join('\n\n')}
-- A table that shows references from the assignment and your judgement
-
----
-
-**Feedback to Student**  
-Provide personalized, constructive feedback using rubric codes and standards.  
-Call out **specific lines or phrases** from the student's submission that are strong or need improvement.  
-Give detailed suggestions for how to improve weak areas (e.g., word choice, organization, clarity, evidence).  
-Use a warm and encouraging tone, like a real teacher guiding a student toward growth.
-
----
-
-**Feedback to Teacher**  
-Describe instructional insights. Mention rubric and standard references.
-
----
-
-🧾 Constraints:
-- Use rubric + standards if both are available.
-- Always use rubric.
-- You must provide a table of your analysis with references from students work and your judgement 
-- Follow the exact structure.
-- Use professional language.
-- Dont mention these constraints in the result. 
-`.trim();
+    `.trim();
 
     const headers = {
       Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     };
 
-    const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
-      model: "mistralai/mistral-7b-instruct:free",
-      messages: [
-        { role: "system", content: "You are an educational grading assistant." },
-        { role: "user", content: prompt }
-      ]
-    }, { headers });
+    const aiResponse = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "mistralai/mistral-7b-instruct:free",
+        messages: [
+          { role: "system", content: "You are an educational grading assistant." },
+          { role: "user", content: prompt },
+        ],
+      },
+      { headers }
+    );
 
-    let result = response.data.choices[0].message.content;
-    debugLog('🧠 Mistral Response', result);
-    result = result.replace(/[^\x00-\x7F]+/g, '');
-
+    const result = aiResponse.data.choices[0].message?.content || "";
     const pdfFilename = `grading-${Date.now()}.pdf`;
     const pdfUrl = await generatePDF(result, pdfFilename);
 
     res.json({ success: true, result, pdfUrl });
   } catch (err) {
-    console.error('🔥 Error during grading:', err);
-    res.status(500).json({ error: 'Error processing grading with Mistral.' });
+    console.error("🔥 Error during grading:", err);
+    res.status(500).json({ error: "Error processing grading with Mistral." });
   }
 });
 app.post('/lessonplan', async (req, res) => {
@@ -549,6 +945,7 @@ Please include all the requested features clearly. Use headings, structure, and 
     res.status(500).json({ error: 'Assignment generation failed.' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
