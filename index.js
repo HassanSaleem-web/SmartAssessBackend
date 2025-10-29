@@ -127,7 +127,9 @@ function generatePDF(content, filename) {
     }
 
     doc.end();
-    stream.on('finish', () => resolve(`/pdfs/${filename}`));
+    const BASE_URL = process.env.PUBLIC_BASE_URL || ''; // e.g. "https://smartassessbackend.onrender.com"
+stream.on('finish', () => resolve(`${BASE_URL}/pdfs/${filename}`));
+
     stream.on('error', reject);
   });
 }
