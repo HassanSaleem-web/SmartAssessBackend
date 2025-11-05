@@ -15,17 +15,25 @@ const PORT = 5000;
 // ---- Fonts setup (add near the top) ----
 const FONTS_DIR = path.join(__dirname, "fonts");
 
-// We’ll try Courier New, and fall back to built-in Courier if not present
 function registerFonts(doc) {
   try {
-    doc.registerFont("CourierNew", path.join(FONTS_DIR, "CourierNew.ttf"));
-    doc.registerFont("CourierNew-Bold", path.join(FONTS_DIR, "CourierNew-Bold.ttf"));
-    return { base: "CourierNew", bold: "CourierNew-Bold" };
+    const regularPath = path.join(FONTS_DIR, "CourierPrime-Regular.ttf");
+    const boldPath = path.join(FONTS_DIR, "CourierPrime-Bold.ttf");
+
+    if (fs.existsSync(regularPath) && fs.existsSync(boldPath)) {
+      doc.registerFont("CourierPrime", regularPath);
+      doc.registerFont("CourierPrime-Bold", boldPath);
+      return { base: "CourierPrime", bold: "CourierPrime-Bold" };
+    } else {
+      console.warn("[fonts] CourierPrime .ttf files not found, using built-ins.");
+      return { base: "Courier", bold: "Courier-Bold" };
+    }
   } catch (e) {
-    // Fallback to PDFKit built-ins
+    console.warn("[fonts] registerFont failed; falling back to built-ins.", e);
     return { base: "Courier", bold: "Courier-Bold" };
   }
 }
+
 
 app.use(cors({
   origin: "https://smartassesgrader-wz54.onrender.com",
