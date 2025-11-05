@@ -132,8 +132,9 @@ function generatePDF(content, filename) {
 
     doc.end();
     stream.on('finish', () => 
-  resolve(`https://smartassessbackend-99pu.onrender.com/pdfs/${encodeURIComponent(filename)}`)
-);
+      resolve(`/pdfs/${encodeURIComponent(filename)}`)
+    );
+    
 
     stream.on('error', reject);
   });
