@@ -12,6 +12,21 @@ const FormData = require("form-data");
 const app = express();
 const PORT = 5000;
 
+// ---- Fonts setup (add near the top) ----
+const FONTS_DIR = path.join(__dirname, "fonts");
+
+// We’ll try Courier New, and fall back to built-in Courier if not present
+function registerFonts(doc) {
+  try {
+    doc.registerFont("CourierNew", path.join(FONTS_DIR, "CourierNew.ttf"));
+    doc.registerFont("CourierNew-Bold", path.join(FONTS_DIR, "CourierNew-Bold.ttf"));
+    return { base: "CourierNew", bold: "CourierNew-Bold" };
+  } catch (e) {
+    // Fallback to PDFKit built-ins
+    return { base: "Courier", bold: "Courier-Bold" };
+  }
+}
+
 app.use(cors({
   origin: "https://smartassesgrader-wz54.onrender.com",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -60,19 +75,44 @@ function loadStandardsFile(subject, gradeLevel) {
 
   return null;
 }
+// Renders text with **bold** spans using continued:true
+function writeRichText(doc, text, fonts, size = 10.5, fill = "#222222", opts = {}) {
+  doc.font(fonts.base).fontSize(size).fillColor(fill);
+
+  // Split on **...** (non-greedy)
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+
+  // Iterate parts: even indexes = normal, odd = bold
+  parts.forEach((part, idx) => {
+    const isBold = idx % 2 === 1;
+    if (isBold) {
+      doc.font(fonts.bold);
+    } else {
+      doc.font(fonts.base);
+    }
+    doc.text(part, { continued: idx !== parts.length - 1, ...opts });
+  });
+
+  // End the continued chain
+  if (parts.length > 0) doc.text("");
+}
+
 function formatSmartAssesReport(doc, content) {
   const lines = content.split('\n');
   let insideTable = false;
   let tableData = [];
 
+  // pick fonts (Courier New if available; else Courier)
+  const fonts = registerFonts(doc);
+
   // ====== HEADER ======
   doc
-    .font("Helvetica-Bold")
+    .font(fonts.bold)
     .fontSize(16)
     .fillColor("#000000")
     .text("SmartAsses | Grading Report", { align: "center" });
   doc
-    .font("Helvetica")
+    .font(fonts.base)
     .fontSize(10)
     .fillColor("#444444")
     .text(`Generated: ${new Date().toLocaleString()}`, { align: "center" })
@@ -83,20 +123,20 @@ function formatSmartAssesReport(doc, content) {
   // ====== BODY ======
   lines.forEach((line) => {
     const trimmed = line.trim();
-    if (!trimmed) return doc.moveDown(0.5);
-    if (trimmed === "---") return doc.moveDown(0.7);
+    if (!trimmed) { doc.moveDown(0.5); return; }
+    if (trimmed === "---") { doc.moveDown(0.7); return; }
 
-    // Section header
+    // Section header line: **Heading**
     const headerMatch = trimmed.match(/^\*\*(.+?)\*\*$/);
     if (headerMatch) {
       if (insideTable && tableData.length) {
-        renderTable(doc, tableData);
+        renderTable(doc, tableData, fonts);
         insideTable = false;
         tableData = [];
       }
       doc.moveDown(0.8);
       doc
-        .font("Helvetica-Bold")
+        .font(fonts.bold)
         .fontSize(13)
         .fillColor("#000000")
         .text(headerMatch[1])
@@ -109,7 +149,7 @@ function formatSmartAssesReport(doc, content) {
     // Table section
     if (trimmed.startsWith("Table of Analysis")) {
       doc.addPage();
-      doc.font("Helvetica-Bold").fontSize(12).text("Table of Analysis").moveDown(0.5);
+      doc.font(fonts.bold).fontSize(12).fillColor("#000000").text("Table of Analysis").moveDown(0.5);
       insideTable = true;
       return;
     }
@@ -120,42 +160,46 @@ function formatSmartAssesReport(doc, content) {
         const cells = trimmed.split("|").slice(1, -1).map((c) => c.trim());
         tableData.push(cells);
       } else {
-        renderTable(doc, tableData);
+        renderTable(doc, tableData, fonts);
         insideTable = false;
         tableData = [];
-        doc.moveDown(0.5).font("Helvetica").fontSize(10.5).text(trimmed);
+        doc.moveDown(0.5);
+        writeRichText(doc, trimmed, fonts, 10.5, "#222222", { align: "justify", lineGap: 4 });
       }
       return;
     }
 
-    // Rubric codes
+    // Rubric code lines
     const rubricMatch = trimmed.match(/^(Ø=)?(Y9\s*)?(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]\s*(.+)/);
     if (rubricMatch) {
       const code = rubricMatch[3];
       const label = rubricMatch[4];
-      doc.moveDown(0.5).font("Helvetica-Bold").fontSize(11.5).text(`${code} — ${label}`);
+      doc.moveDown(0.5).font(fonts.bold).fontSize(11.5).fillColor("#000000").text(`${code} — ${label}`);
       return;
     }
 
-    // Sub-sections (Explanation, Evidence, Suggestions)
+    // Sub-sections: Explanation/Evidence/Suggestions
     const subMatch = trimmed.match(/^[-–]?\s*(Explanation|Evidence|Suggestions):\s*(.*)/i);
     if (subMatch) {
-      doc.font("Helvetica-Bold").fontSize(10.5).text(`${subMatch[1]}: `, { continued: true });
-      doc.font("Helvetica").fontSize(10.5).fillColor("#333333").text(subMatch[2]);
+      doc.font(fonts.bold).fontSize(10.5).fillColor("#000000").text(`${subMatch[1]}: `, { continued: true });
+      // subMatch[2] can also contain **bold** spans
+      writeRichText(doc, subMatch[2], fonts, 10.5, "#333333");
       return;
     }
 
-    // Default paragraph
-    doc.font("Helvetica").fontSize(10.5).fillColor("#222222").text(trimmed, { align: "justify", lineGap: 4 });
+    // Default paragraph (supports inline **bold**)
+    writeRichText(doc, trimmed, fonts, 10.5, "#222222", { align: "justify", lineGap: 4 });
   });
 
-  if (insideTable && tableData.length) renderTable(doc, tableData);
+  if (insideTable && tableData.length) {
+    renderTable(doc, tableData, fonts);
+  }
 
   // ====== FOOTER ======
   doc.moveDown(2);
   doc.moveTo(50, doc.y).lineTo(550, doc.y).strokeColor("#aaaaaa").stroke();
   doc
-    .font("Helvetica")
+    .font(fonts.base)
     .fontSize(9)
     .fillColor("#555555")
     .text("© 2025 SmartAsses | AI-Powered Educational Insights", { align: "center" });
