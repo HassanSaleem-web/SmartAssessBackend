@@ -12,7 +12,11 @@ const FormData = require("form-data");
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: "https://smartassesgrader-wz54.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 
