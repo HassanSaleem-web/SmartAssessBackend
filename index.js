@@ -86,6 +86,7 @@ function formatSmartAssesReport(doc, content) {
     if (!trimmed) return doc.moveDown(0.5);
     if (trimmed === "---") return doc.moveDown(0.7);
 
+    // Section header
     const headerMatch = trimmed.match(/^\*\*(.+?)\*\*$/);
     if (headerMatch) {
       if (insideTable && tableData.length) {
@@ -105,6 +106,7 @@ function formatSmartAssesReport(doc, content) {
       return;
     }
 
+    // Table section
     if (trimmed.startsWith("Table of Analysis")) {
       doc.addPage();
       doc.font("Helvetica-Bold").fontSize(12).text("Table of Analysis").moveDown(0.5);
@@ -112,6 +114,7 @@ function formatSmartAssesReport(doc, content) {
       return;
     }
 
+    // Inside table
     if (insideTable) {
       if (trimmed.startsWith("|")) {
         const cells = trimmed.split("|").slice(1, -1).map((c) => c.trim());
@@ -125,6 +128,7 @@ function formatSmartAssesReport(doc, content) {
       return;
     }
 
+    // Rubric codes
     const rubricMatch = trimmed.match(/^(Ø=)?(Y9\s*)?(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]\s*(.+)/);
     if (rubricMatch) {
       const code = rubricMatch[3];
@@ -133,6 +137,7 @@ function formatSmartAssesReport(doc, content) {
       return;
     }
 
+    // Sub-sections (Explanation, Evidence, Suggestions)
     const subMatch = trimmed.match(/^[-–]?\s*(Explanation|Evidence|Suggestions):\s*(.*)/i);
     if (subMatch) {
       doc.font("Helvetica-Bold").fontSize(10.5).text(`${subMatch[1]}: `, { continued: true });
@@ -140,12 +145,11 @@ function formatSmartAssesReport(doc, content) {
       return;
     }
 
+    // Default paragraph
     doc.font("Helvetica").fontSize(10.5).fillColor("#222222").text(trimmed, { align: "justify", lineGap: 4 });
   });
 
-  if (insideTable && tableData.length) {
-    renderTable(doc, tableData);
-  }
+  if (insideTable && tableData.length) renderTable(doc, tableData);
 
   // ====== FOOTER ======
   doc.moveDown(2);
@@ -157,6 +161,7 @@ function formatSmartAssesReport(doc, content) {
     .text("© 2025 SmartAsses | AI-Powered Educational Insights", { align: "center" });
 }
 
+
 function generatePDF(content, filename) {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ margin: 50 });
@@ -164,77 +169,15 @@ function generatePDF(content, filename) {
     const stream = fs.createWriteStream(filePath);
     doc.pipe(stream);
 
-    const lines = content.split('\n');
-    let insideTable = false;
-    let tableData = [];
-
-    lines.forEach((line) => {
-      const trimmed = line.trim();
-      if (!trimmed) return doc.moveDown(0.5);
-      if (trimmed === '---') return doc.moveDown(0.7);
-
-      const headerMatch = trimmed.match(/^\*\*(.+?)\*\*$/);
-      if (headerMatch) {
-        if (insideTable && tableData.length) {
-          renderTable(doc, tableData);
-          insideTable = false;
-          tableData = [];
-        }
-        doc.moveDown(0.5).font('Helvetica-Bold').fontSize(13).text(headerMatch[1]);
-        return;
-      }
-
-      if (trimmed.startsWith('Table of Analysis')) {
-        doc.addPage();
-        doc.moveDown(1).font('Helvetica-Bold').fontSize(12).text('Table of Analysis');
-        insideTable = true;
-        return;
-      }
-
-      if (insideTable) {
-        if (trimmed.startsWith('|')) {
-          const cells = trimmed.split('|').slice(1, -1).map(cell => cell.trim());
-          tableData.push(cells);
-        } else {
-          renderTable(doc, tableData);
-          insideTable = false;
-          tableData = [];
-          doc.moveDown(0.5).font('Helvetica').fontSize(10.5).text(trimmed);
-        }
-        return;
-      }
-
-      const rubricLabelMatch = trimmed.match(/^(Ø=)?(Y9\s*)?(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]\s*(.+)/);
-      if (rubricLabelMatch) {
-        const code = rubricLabelMatch[3];
-        const label = rubricLabelMatch[4];
-        doc.moveDown(0.5).font('Helvetica-Bold').fontSize(11.5).text(`${code} - ${label}`);
-        return;
-      }
-
-      const subMatch = trimmed.match(/^[-–]?\s*(Explanation|Evidence|Suggestions):\s*(.*)/i);
-      if (subMatch) {
-        doc.font('Helvetica-Bold').fontSize(10.5).text(`${subMatch[1]}: `, { continued: true });
-        doc.font('Helvetica').fontSize(10.5).text(subMatch[2]);
-        return;
-      }
-
-      doc.font('Helvetica').fontSize(10.5).text(trimmed);
-    });
-
-    if (insideTable && tableData.length) {
-      renderTable(doc, tableData);
-    }
+    // 👇 Call ONLY your formatter helper here (no duplicate logic)
     formatSmartAssesReport(doc, content);
-    doc.end();
-    stream.on('finish', () => 
-      resolve(`/pdfs/${encodeURIComponent(filename)}`)
-    );
-    
 
-    stream.on('error', reject);
+    doc.end();
+    stream.on("finish", () => resolve(`/pdfs/${encodeURIComponent(filename)}`));
+    stream.on("error", reject);
   });
 }
+
 
 function renderTable(doc, tableData) {
   const startX = doc.page.margins.left;
