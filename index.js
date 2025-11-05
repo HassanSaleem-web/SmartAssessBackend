@@ -60,6 +60,102 @@ function loadStandardsFile(subject, gradeLevel) {
 
   return null;
 }
+function formatSmartAssesReport(doc, content) {
+  const lines = content.split('\n');
+  let insideTable = false;
+  let tableData = [];
+
+  // ====== HEADER ======
+  doc
+    .font("Helvetica-Bold")
+    .fontSize(16)
+    .fillColor("#000000")
+    .text("SmartAsses | Grading Report", { align: "center" });
+  doc
+    .font("Helvetica")
+    .fontSize(10)
+    .fillColor("#444444")
+    .text(`Generated: ${new Date().toLocaleString()}`, { align: "center" })
+    .moveDown(0.5);
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).strokeColor("#999999").stroke();
+  doc.moveDown(1);
+
+  // ====== BODY ======
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return doc.moveDown(0.5);
+    if (trimmed === "---") return doc.moveDown(0.7);
+
+    const headerMatch = trimmed.match(/^\*\*(.+?)\*\*$/);
+    if (headerMatch) {
+      if (insideTable && tableData.length) {
+        renderTable(doc, tableData);
+        insideTable = false;
+        tableData = [];
+      }
+      doc.moveDown(0.8);
+      doc
+        .font("Helvetica-Bold")
+        .fontSize(13)
+        .fillColor("#000000")
+        .text(headerMatch[1])
+        .moveDown(0.3);
+      doc.moveTo(50, doc.y).lineTo(550, doc.y).strokeColor("#cccccc").stroke();
+      doc.moveDown(0.6);
+      return;
+    }
+
+    if (trimmed.startsWith("Table of Analysis")) {
+      doc.addPage();
+      doc.font("Helvetica-Bold").fontSize(12).text("Table of Analysis").moveDown(0.5);
+      insideTable = true;
+      return;
+    }
+
+    if (insideTable) {
+      if (trimmed.startsWith("|")) {
+        const cells = trimmed.split("|").slice(1, -1).map((c) => c.trim());
+        tableData.push(cells);
+      } else {
+        renderTable(doc, tableData);
+        insideTable = false;
+        tableData = [];
+        doc.moveDown(0.5).font("Helvetica").fontSize(10.5).text(trimmed);
+      }
+      return;
+    }
+
+    const rubricMatch = trimmed.match(/^(Ø=)?(Y9\s*)?(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]\s*(.+)/);
+    if (rubricMatch) {
+      const code = rubricMatch[3];
+      const label = rubricMatch[4];
+      doc.moveDown(0.5).font("Helvetica-Bold").fontSize(11.5).text(`${code} — ${label}`);
+      return;
+    }
+
+    const subMatch = trimmed.match(/^[-–]?\s*(Explanation|Evidence|Suggestions):\s*(.*)/i);
+    if (subMatch) {
+      doc.font("Helvetica-Bold").fontSize(10.5).text(`${subMatch[1]}: `, { continued: true });
+      doc.font("Helvetica").fontSize(10.5).fillColor("#333333").text(subMatch[2]);
+      return;
+    }
+
+    doc.font("Helvetica").fontSize(10.5).fillColor("#222222").text(trimmed, { align: "justify", lineGap: 4 });
+  });
+
+  if (insideTable && tableData.length) {
+    renderTable(doc, tableData);
+  }
+
+  // ====== FOOTER ======
+  doc.moveDown(2);
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).strokeColor("#aaaaaa").stroke();
+  doc
+    .font("Helvetica")
+    .fontSize(9)
+    .fillColor("#555555")
+    .text("© 2025 SmartAsses | AI-Powered Educational Insights", { align: "center" });
+}
 
 function generatePDF(content, filename) {
   return new Promise((resolve, reject) => {
@@ -129,7 +225,7 @@ function generatePDF(content, filename) {
     if (insideTable && tableData.length) {
       renderTable(doc, tableData);
     }
-
+    formatSmartAssesReport(doc, content);
     doc.end();
     stream.on('finish', () => 
       resolve(`/pdfs/${encodeURIComponent(filename)}`)
