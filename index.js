@@ -35,11 +35,18 @@ function registerFonts(doc) {
 }
 
 
-app.use(cors({
-  origin: "https://smartassesgrader-wz54.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://smartassesgrader-wz54.onrender.com",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
+
 app.use(bodyParser.json());
 app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 
