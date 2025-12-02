@@ -313,7 +313,7 @@ Respond with only the exact subject name from the list above. Do NOT explain. Do
 `.trim();
 
   const payload = {
-    model: "mistralai/mistral-7b-instruct:free",
+    model: "x-ai/grok-4-fast",
     messages: [
       { role: "system", content: "You are a subject classification assistant." },
       { role: "user", content: prompt }
@@ -825,7 +825,7 @@ ${condensedRubric}
     const aiResponse = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "mistralai/mistral-7b-instruct:free",
+        model: "x-ai/grok-4-fast",
         messages: [
           { role: "system", content: "You are an educational grading assistant." },
           { role: "user", content: prompt },
@@ -934,7 +934,7 @@ Constraints:
     };
 
     const response = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
-      model: "mistralai/mistral-7b-instruct:free",
+      model: "x-ai/grok-4-fast",
       messages: [
         { role: "system", content: "You are a professional lesson planner and curriculum designer." },
         { role: "user", content: prompt }
@@ -1031,7 +1031,7 @@ Please include all the requested features clearly. Use headings, structure, and 
     };
 
     const aiResponse = await axios.post("https://openrouter.ai/api/v1/chat/completions", {
-      model: "mistralai/mistral-7b-instruct:free",
+      model: "x-ai/grok-4-fast",
       messages: [
         { role: "system", content: "You are an assignment designer educator." },
         { role: "user", content: prompt }
