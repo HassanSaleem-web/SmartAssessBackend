@@ -220,6 +220,31 @@ function formatSmartAssesReport(doc, content) {
     .text("© 2025 SmartAsses | AI-Powered Educational Insights", { align: "center" });
 }
 
+function normalizeAiOutput(text) {
+  if (!text) return "";
+
+  let t = text;
+
+  // Add blank lines before markdown headings (**Heading**)
+  t = t.replace(/\n?\s*\*\*(.+?)\*\*\s*/g, "\n\n**$1**\n");
+
+  // Ensure component analysis rubric codes get spacing
+  t = t.replace(
+    /(C\d+\.\d+|P\d+|SE\d+|A\d+|CP\d+|CE\d+)\s*[-:]/g,
+    "\n\n$1 -"
+  );
+
+  // Add spacing after separator lines “---”
+  t = t.replace(/---+/g, "\n\n---\n\n");
+
+  // Fix smashed sentences: “Text.One” → “Text.\n\nOne”
+  t = t.replace(/\.([A-Z])/g, ".\n\n$1");
+
+  // Normalize too many newlines (3+ → 2)
+  t = t.replace(/\n{3,}/g, "\n\n");
+
+  return t.trim();
+}
 
 function generatePDF(content, filename) {
   return new Promise((resolve, reject) => {
@@ -775,7 +800,9 @@ ${condensedRubric}
 
       // ✅ Generate PDF
       const pdfFilename = `grading-${Date.now()}.pdf`;
-      const pdfUrl = await generatePDF(assistantReply, pdfFilename);
+
+     const cleaned = normalizeAiOutput(assistantReply);
+const pdfUrl = await generatePDF(cleaned, pdfFilename);
 
       if (isPdf && outputDir) fs.rmSync(outputDir, { recursive: true, force: true });
 
@@ -836,7 +863,9 @@ ${condensedRubric}
 
     const result = aiResponse.data.choices[0].message?.content || "";
     const pdfFilename = `grading-${Date.now()}.pdf`;
-    const pdfUrl = await generatePDF(result, pdfFilename);
+    const cleaned = normalizeAiOutput(result);
+const pdfUrl = await generatePDF(cleaned, pdfFilename);
+
 
     res.json({ success: true, result, pdfUrl });
   } catch (err) {
